@@ -40,4 +40,5 @@ class Player:
         self.downblock = 1
 
     def draw(self):
-        pygame.draw.circle(obraz, self.color, [int(self.x), int(self.y)], int(self.size))
+        pygame.draw.rect(obraz, self.color, [self.x, self.y, self.size*2, self.size*2])
+        pygame.draw.circle(obraz, [0,0,0], [int(self.x+self.size), int(self.y+self.size)], int(self.size))

@@ -10,11 +10,13 @@ with open('mapa.txt', 'rb') as obiekt:
 maciek = Player(size/2, size/2, 0)
 
 
+
 def main(Run,offpos):
     while Run:
         mouse = pygame.mouse.get_pos()
         redraw_game(80, 80, 80)
         offpos[0], offpos[1] = moving(offpos[0], offpos[1], 3)
+        listBlock = []
 
         if maciek.x < size*4:
             offpos[0] += 1
@@ -47,21 +49,27 @@ def main(Run,offpos):
 
 
         for b in listMapy:
-            if b.x - maciek.size < maciek.x - offpos[0] < b.x + b.size + maciek.size and b.y - maciek.size < maciek.y - offpos[1] < b.y + b.size + maciek.size:
+            if b.x < maciek.x - offpos[0] < b.x + b.size and b.y < maciek.y - offpos[1] < b.y + b.size:
                 if b.terrain == 0:
+                    listBlock.append(b)
 
-                    if b.x + size/2 - maciek.x < 0:
-                        maciek.leftblock = 0
-                    if b.x + size/2 - maciek.x > 0:
-                        maciek.rightblock = 0
-                    if b.y + size/2 - maciek.y < 0:
-                        maciek.upblock = 0
-                    if b.y + size/2 - maciek.y > 0:
-                        maciek.downblock = 0
+            if b.x < maciek.x + maciek.size*2 - offpos[0] < b.x + b.size and b.y < maciek.y + maciek.size*2 - offpos[1] < b.y + b.size:
+                if b.terrain == 0:
+                    listBlock.append(b)
+
+            if b.x < maciek.x + maciek.size*2 - offpos[0] < b.x + b.size and b.y < maciek.y - offpos[1] < b.y + b.size:
+                if b.terrain == 0:
+                    listBlock.append(b)
+
+            if b.x < maciek.x - offpos[0] < b.x + b.size and b.y < maciek.y + maciek.size*2 - offpos[1] < b.y + b.size:
+                if b.terrain == 0:
+                    listBlock.append(b)
 
 
+        for b in listBlock:
+            
+            b.drawHighlight()
 
-                    b.drawHighlight()
 
 
 
