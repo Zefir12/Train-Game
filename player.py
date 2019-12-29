@@ -42,3 +42,27 @@ class Player:
     def draw(self):
         pygame.draw.rect(obraz, self.color, [self.x, self.y, self.size*2, self.size*2])
         pygame.draw.circle(obraz, [0,0,0], [int(self.x+self.size), int(self.y+self.size)], int(self.size))
+
+    def htiboxy(self, listaobiektow):
+        for b in listaobiektow:
+            if b.x - self.size < self.x - offpos[0] < b.x + b.size + self.size and b.y - self.size < self.y - offpos[
+                1] < b.y + b.size + self.size:
+                if b.terrain == 0:
+                    if (self.x - offpos[0] + self.speed >= b.x):
+                        self.startx += self.speed
+                    if (self.x - offpos[0] - self.speed <= b.x + b.size):
+                        self.startx -= self.speed
+                    if (self.y - offpos[1] + self.speed >= b.y):
+                        self.starty += self.speed
+                    if (self.y - offpos[1] - self.speed <= b.y + b.size):
+                        self.starty -= self.speed
+
+    def mapblock(self):
+        if self.startx < 0:
+            self.startx += self.speed
+        if self.startx > (wymiaryMapyx * size) + self.size*2:
+            self.startx -= self.speed
+        if self.starty < 0:
+            self.starty += self.speed
+        if self.starty > (wymiaryMapyy * size) - self.size*2:
+            self.starty -= self.speed
