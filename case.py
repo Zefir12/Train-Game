@@ -14,6 +14,7 @@ class Case:
         self.terrain = 0
 
 
+
     def update(self):
         self.x = self.startx + self.offx
         self.y = self.starty + self.offy
