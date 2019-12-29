@@ -15,18 +15,22 @@ class Case:
 
 
 
+
     def update(self):
         self.x = self.startx + self.offx
         self.y = self.starty + self.offy
 
-    def drawHighlight(self):
-        pygame.draw.rect(obraz, [0, 40, 100], [self.x + self.offx, self.y + self.offy, self.size, self.size],6)
+    def drawHighlight(self, r, g, b):
+        pygame.draw.rect(obraz, [r, g, b], [self.x + self.offx, self.y + self.offy, self.size, self.size],6)
 
     def drawTerrain(self):
         if self.terrain == 1:
             pygame.draw.rect(obraz, [0, 90, 0], [self.x + self.offx, self.y+self.offy, self.size, self.size])
         elif self.terrain == 2:
-            pygame.draw.rect(obraz, [40, 0, 10], [self.x+ self.offx, self.y+self.offy, self.size, self.size])
+            pygame.draw.rect(obraz, [40, 0, 10], [self.x + self.offx, self.y+self.offy, self.size, self.size])
+        elif self.terrain == 3: #
+            pygame.draw.rect(obraz, [0, 100, 100], [self.x + self.offx, self.y+self.offy, self.size, self.size])
+
 
     def drawCase(self):
         pygame.draw.rect(obraz, self.color, [self.x + self.offx, self.y+self.offy, self.size, self.size], 1)
