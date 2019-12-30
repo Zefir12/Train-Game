@@ -14,5 +14,5 @@ chodzenie = 0
 drawterrain = True
 szachownica = False
 sztuczne3d = True
-showId = True
+showId = False
 watereffects = False
