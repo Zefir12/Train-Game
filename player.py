@@ -54,8 +54,7 @@ class Player:
     def handWorking(self,listaobiektow):
         for b in listaobiektow:
             if b.x < self.hand[0] - offpos[0] < b.x + b.size and b.y < self.hand[1] - offpos[1] < b.y + b.size:
-                if b.colorgreen[0] < 254:
-                    b.colorgreen[0] += 1
+                b.drawHighlight(255,0,0)
 
 
 

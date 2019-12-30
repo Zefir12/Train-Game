@@ -15,9 +15,14 @@ for b in listMapy:
 
 
 def main(Run,offpos):
+    i=0
     while Run:
         mouse = pygame.mouse.get_pos()
-        redraw_game(0, 20, 80)
+        clock.tick(60)
+        i += 1
+        if i > 250:
+            i = 0
+        redraw_game(i, 20, 80)
         offpos[0], offpos[1] = moving(offpos[0], offpos[1], 3)
 
         if maciek.x < size*8:
@@ -39,7 +44,7 @@ def main(Run,offpos):
 
         for b in listMapy:
             if sztuczne3d:
-                b.xd3d(-20, 40)
+                b.xd3d(-10, 20)
 
         for b in listMapy:
             b.drawTerrain()
@@ -51,7 +56,7 @@ def main(Run,offpos):
                 b.drawId()
             if b.x < mouse[0] - offpos[0] < b.x + b.size and b.y < mouse[1] - offpos[1] < b.y + b.size:
                 b.drawHighlight(0, 40, 100)
-                napisy(b.caseNeighbours,0,0,0)
+                napisy(b.caseNeighbours, 0, 0, 0)
 
         maciek.offx, maciek.offy = offpos[0], offpos[1]
         maciek.move()

@@ -9,6 +9,7 @@ clock = pygame.time.Clock()
 czcionka = pygame.font.Font("Czcionki/Montserrat-ExtraBold.otf", 10)
 czcionkaBIG = pygame.font.Font("Czcionki/Montserrat-ExtraBold.otf", 40)
 obraz = pygame.display.set_mode([szerokoscOkna, wysokoscOkna])
+water = pygame.image.load('water.png')
 
 
 def napisy(co, x, y,rozmiar):
@@ -52,9 +53,3 @@ def moving(x, y, speed):
     if pygame.key.get_pressed()[pygame.K_s]:
         y -= speed
     return x, y
-
-
-def hitBox(pozycjax, pozycjay, pozycjax2, pozycjay2, rozmiar):
-    if (pozycjax + rozmiar >= pozycjax2) and (pozycjax - rozmiar <= pozycjax2) and (
-            pozycjay + rozmiar >= pozycjay2) and (pozycjay - rozmiar <= pozycjay2):
-        return 1

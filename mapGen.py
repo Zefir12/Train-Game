@@ -16,10 +16,20 @@ for b in range(wymiaryMapyx):
 
 
 a = random.randint(3,8)
-
 rozmiarmin = 0
 rozmiarmax = 3
 listakregi = [(0, wymiaryMapyy*size), (wymiaryMapyx*size/6*5, wymiaryMapyy * size/2)]
+
+liczbaskal = 3
+rozmiarskalmin = 4
+rozmiarskalmax = 5
+liczbaforest = 8
+rozmiarforestmin = 1
+rozmiarforestmax = 5
+listaforest = []
+listaskaly = []
+
+
 
 for b in range(a):
     c = random.randint(0, idCase)
@@ -41,6 +51,50 @@ for b in listakregi:
             if (((temp[0] - bbb.x) ** 2) + ((temp[1] - bbb.y) ** 2)) < (bbb.size * random.randint(rozmiarmax, rozmiarmax) * 2) ** 2:
                 bbb.terrain = 1
 
+#tworzymy lasy
+for b in range(liczbaforest):
+    while len(listaforest) < liczbaforest:
+        c = random.randint(0, idCase)
+        for bb in listaMapy:
+            if bb.id == c:
+                if bb.terrain == 1:
+                    listaforest.append((bb.x, bb.y))
+
+for b in listaforest:
+    for bb in listaMapy:
+        if (((b[0] - bb.x) ** 2) + ((b[1] - bb.y) ** 2)) < (bb.size * random.randint(rozmiarforestmin, rozmiarforestmax) * 2) ** 2:
+            bb.terrain = 4
+
+#tworzymy kamyki
+for b in range(liczbaskal):
+    while len(listaskaly) < liczbaskal:
+        c = random.randint(0, idCase)
+        for bb in listaMapy:
+            if bb.id == c:
+                if bb.terrain == 1:
+                    listaskaly.append((bb.x, bb.y))
+
+for b in listaskaly:
+    for bb in listaMapy:
+        if (((b[0] - bb.x) ** 2) + ((b[1] - bb.y) ** 2)) < (bb.size * random.randint(rozmiarskalmin, rozmiarskalmax) * 3) ** 2:
+            bb.terrain = 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#############################################################################################################
 for b in listaMapy:
     for bb in listaMapy:
         if b.id - wymiaryMapyy == bb.id and b.terrain != 0:
@@ -67,8 +121,6 @@ for b in listaMapy:
         b.shade1 = True
     if b.caseNeighbours[3] is None and b.terrain != 0:
         b.shade2 = True
-
-
 
 
 for b in listaMapy:

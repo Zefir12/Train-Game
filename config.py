@@ -12,3 +12,4 @@ chodzenie = 0
 szachownica = False
 sztuczne3d = True
 showId = False
+watereffects = False

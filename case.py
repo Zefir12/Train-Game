@@ -11,6 +11,7 @@ class Case:
         self.offy = 0
         self.color = [0, 0, 0]
         self.colorgreen = [0, 90, 0]
+        self.colordarkgreen = [0, 50, 0]
         self.colorgray = [96,96,96]
         self.colorblue = [0,226,255]
         self.size = size
@@ -42,6 +43,10 @@ class Case:
             pygame.draw.rect(obraz, self.colorgray, [self.x + self.offx, self.y+self.offy, self.size, self.size])
         elif self.terrain == 3:
             pygame.draw.rect(obraz, self.colorblue, [self.x + self.offx, self.y+self.offy, self.size, self.size])
+        elif self.terrain == 4:
+            pygame.draw.rect(obraz, self.colordarkgreen, [self.x + self.offx, self.y+self.offy, self.size, self.size])
+        if watereffects:
+            obraz.blit(water, [self.x + self.offx, self.y+self.offy, self.size, self.size])
 
 
     def drawCase(self):
