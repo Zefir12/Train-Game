@@ -7,4 +7,4 @@ We are streaming our "game development" on twitch on [this channel](https://www.
 
 To play this game first you need to execute `mapGen.py` file to generate map.
 
-You can download it and try to test this out if you have some [bug report](.github/ISSUE_TEMPLATE/bug_report.md) or [feedback](.github/ISSUE_TEMPLATE/feature_request.md) we will answer :D.
+You can download it and try to test this out if you have some bug report or feedback we will answer :D.
