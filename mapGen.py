@@ -89,8 +89,11 @@ for b in listaskaly:
 
 #############################################################################################################
 ### Tworzenie sąsiadów
+percent = 0
 for b in listaMapy:
-    print(b.id/idCase)
+    if percent < round(b.id/idCase * 100):
+        percent = round(b.id/idCase * 100)
+        print(str(percent) + '%')
     for bb in listaMapy:
         if b.id - wymiaryMapyy == bb.id and b.terrain != 0:
             if bb.terrain != 0:
