@@ -53,7 +53,7 @@ class Player:
     def mapblock2(self):
         if self.startx < 0:
             self.startx += self.speed
-        if self.startx > (wymiaryMapyx * size) + self.size*2:
+        if self.startx > (wymiaryMapyx * size) - self.size*2:
             self.startx -= self.speed
         if self.starty < 0:
             self.starty += self.speed
