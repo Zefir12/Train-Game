@@ -88,7 +88,7 @@ def main(Run,offpos):
         maciek.draw()
 
 
-        off()
+        Run = off()
 
 
 
