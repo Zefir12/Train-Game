@@ -5,19 +5,20 @@ import pickle
 
 
 with open('mapa.txt', 'rb') as obiekt:
-    listMapyAll = pickle.load(obiekt)
+    listMapy = pickle.load(obiekt)
 
+
+with open('chunks.txt', 'rb') as obiekt:
+    listCHUNKS = pickle.load(obiekt)
 
 maciek = Player(size/2, wymiaryMapyy*size - size/2, 0)
-for b in listMapyAll:
+for b in listMapy:
     if b.x < maciek.x - offpos[0] < b.x + b.size and b.y < maciek.y - offpos[1] < b.y + b.size:
         b.terrain = 1
 
 
 def main(Run,offpos):
     i=0
-    ii=0
-    listMapy = []
     while Run:
         mouse = pygame.mouse.get_pos()
         clock.tick(60)
@@ -27,15 +28,6 @@ def main(Run,offpos):
             i = 0
 
         offpos[0], offpos[1] = moving(offpos[0], offpos[1], 3)
-        if ii < 6:
-            ii+=1
-        else:
-            ii=0
-        if ii == 0:
-            listMapy = []
-            for b in listMapyAll:
-                if b.x + offpos[0] >= -100 and b.x + offpos[0] <= szerokoscOkna + 100 and b.y + offpos[1] >= -100 and b.y + offpos[1] <= wysokoscOkna + 100:
-                    listMapy.append(b)
 
         if maciek.x < size*8:
             offpos[0] += 1
@@ -71,7 +63,8 @@ def main(Run,offpos):
                 b.drawHighlight(0, 40, 100)
                 napisy(b.caseNeighbours, 0, 0, 0)
 
-
+        for b in listCHUNKS:
+            pygame.draw.rect(obraz, [200, 0, 0], [b[0] + offpos[0]*2, b[1] + offpos[1]*2, size*8, size*8], 2)
 
 
 
@@ -90,8 +83,8 @@ def main(Run,offpos):
         else:
             maciek.mapblock2()
             maciek.hitboxy2(listMapy, 0)
-            maciek.htiboxy2(listMapy, 2)
-            maciek.htiboxy2(listMapy, 4)
+            maciek.hitboxy2(listMapy, 2)
+            maciek.hitboxy2(listMapy, 4)
         maciek.draw()
 
 

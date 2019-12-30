@@ -106,9 +106,9 @@ for b in listaMapy:
                 b.caseNeighbours[0] = bb.id
 
 for b in listaMapy:
-    if (b.id + 1)%wymiaryMapyy == 0 and b.terrain != 0:
+    if (b.id + 1) % wymiaryMapyy == 0 and b.terrain != 0:
         b.caseNeighbours[2] = None
-    if (b.id)%wymiaryMapyy == 0 and b.terrain != 0:
+    if b.id % wymiaryMapyy == 0 and b.terrain != 0:
         b.caseNeighbours[0] = None
 
 for b in listaMapy:
@@ -122,6 +122,21 @@ for b in listaMapy:
     if b.terrain != 0:
         if b.id < wymiaryMapyy:
             b.shade = True
+
+###############################################################################################################
+### Creating chunks
+
+listaCHUNK = []
+
+for b in range(int(wymiaryMapyx/8)):
+    for bb in range(int(wymiaryMapyy/8)):
+        listaCHUNK.append((b * size * 8, bb * size * 8))
+
+with open('chunks.txt', 'wb') as obiekt:
+    pickle.dump(listaCHUNK, obiekt)
+
+
+
 
 
 with open('mapa.txt', 'wb') as obiekt:

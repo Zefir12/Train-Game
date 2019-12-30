@@ -21,8 +21,6 @@ class Case:
         self.caseNeighbours = [None, None, None, None]
         self.durability = 0
 
-
-
     def update(self):
         self.x = self.startx + self.offx
         self.y = self.starty + self.offy
@@ -36,7 +34,6 @@ class Case:
         if self.shade2:
             pygame.draw.polygon(obraz, [100, 100, 100], [(self.x+self.offx+x, self.y + self.offy + y), (self.x+self.offx+x, self.y + self.offy + y + size), (self.x+self.offx, self.y + self.offy + self.size), (self.x + self.offx, self.y+self.offy)])
 
-
     def drawTerrain(self):
         if self.terrain == 1:
             pygame.draw.rect(obraz, self.colorgreen, [self.x + self.offx, self.y+self.offy, self.size, self.size])
@@ -48,7 +45,6 @@ class Case:
             pygame.draw.rect(obraz, self.colordarkgreen, [self.x + self.offx, self.y+self.offy, self.size, self.size])
         if watereffects:
             obraz.blit(water, [self.x + self.offx, self.y+self.offy, self.size, self.size])
-
 
     def drawCase(self):
         if self.terrain != 0:
