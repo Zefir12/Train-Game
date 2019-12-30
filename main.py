@@ -77,6 +77,8 @@ def main(Run, offpos):
         maciek.drawHand()
         maciek.terrainblock()
         maciek.handWorking(listVisibleBlocks)
+        print("Ilosc skaly",maciek.eq[0])
+        print("Ilosc drewna",maciek.eq[1])
         if chodzenie == 0:
             maciek.mapblock()
             maciek.htiboxy(listVisibleBlocks, 0)
