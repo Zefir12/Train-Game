@@ -33,18 +33,13 @@ def main(Run,offpos):
             offpos[1] -= 1
             maciek.y -= 1
 
-
         for b in listMapy:
             b.offx, b.offy = offpos[0], offpos[1]
             b.update()
 
-
         for b in listMapy:
-            if zaokraglanie:
-                b.drawUnder()
             if sztuczne3d:
                 b.xd3d(-20, 40)
-
 
         for b in listMapy:
             b.drawTerrain()
@@ -52,8 +47,11 @@ def main(Run,offpos):
                 b.drawCase()
 
         for b in listMapy:
+            if showId:
+                b.drawId()
             if b.x < mouse[0] - offpos[0] < b.x + b.size and b.y < mouse[1] - offpos[1] < b.y + b.size:
                 b.drawHighlight(0, 40, 100)
+                napisy(b.caseNeighbours,0,0,0)
 
         maciek.offx, maciek.offy = offpos[0], offpos[1]
         maciek.move()
@@ -64,10 +62,10 @@ def main(Run,offpos):
         maciek.handWorking(listMapy)
         if chodzenie == 0:
             maciek.mapblock()
-            maciek.htiboxy(listMapy,0)
+            maciek.htiboxy(listMapy, 0)
         else:
             maciek.mapblock2()
-            maciek.hitboxy2(listMapy,0)
+            maciek.hitboxy2(listMapy, 0)
         maciek.draw()
 
 

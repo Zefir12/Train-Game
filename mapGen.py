@@ -15,7 +15,7 @@ for b in range(wymiaryMapyx):
 
 
 
-a = random.randint(3,8) # teren
+a = random.randint(3,8)
 
 rozmiarmin = 0
 rozmiarmax = 3
@@ -41,6 +41,40 @@ for b in listakregi:
             if (((temp[0] - bbb.x) ** 2) + ((temp[1] - bbb.y) ** 2)) < (bbb.size * random.randint(rozmiarmax, rozmiarmax) * 2) ** 2:
                 bbb.terrain = 1
 
+for b in listaMapy:
+    for bb in listaMapy:
+        if b.id - wymiaryMapyy == bb.id and b.terrain != 0:
+            if bb.terrain != 0:
+                b.caseNeighbours[3] = bb.id
+        if b.id + wymiaryMapyy == bb.id and b.terrain != 0:
+            if bb.terrain != 0:
+                b.caseNeighbours[1] = bb.id
+        if b.id + 1 == bb.id and b.terrain != 0:
+            if bb.terrain != 0:
+                b.caseNeighbours[2] = bb.id
+        if b.id - 1 == bb.id and b.terrain != 0:
+            if bb.terrain != 0:
+                b.caseNeighbours[0] = bb.id
+
+for b in listaMapy:
+    if (b.id + 1)%wymiaryMapyy == 0 and b.terrain != 0:
+        b.caseNeighbours[2] = None
+    if (b.id)%wymiaryMapyy == 0 and b.terrain != 0:
+        b.caseNeighbours[0] = None
+
+for b in listaMapy:
+    if b.caseNeighbours[2] is None and b.terrain != 0:
+        b.shade1 = True
+    if b.caseNeighbours[3] is None and b.terrain != 0:
+        b.shade2 = True
+
+
+
+
+for b in listaMapy:
+    if b.terrain != 0:
+        if b.id < wymiaryMapyy:
+            b.shade = True
 
 
 with open('mapa.txt', 'wb') as obiekt:

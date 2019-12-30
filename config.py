@@ -10,5 +10,5 @@ size = 30
 offpos = [0, 0]
 chodzenie = 0
 szachownica = False
-zaokraglanie = False
 sztuczne3d = True
+showId = False

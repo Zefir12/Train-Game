@@ -9,10 +9,17 @@ class Case:
         self.starty = self.y
         self.offx = 0
         self.offy = 0
-        self.color = [0,0,0]
-        self.colorgreen = [0,90,0]
+        self.color = [0, 0, 0]
+        self.colorgreen = [0, 90, 0]
+        self.colorgray = [96,96,96]
+        self.colorblue = [0,226,255]
         self.size = size
         self.terrain = 0
+        self.shade1 = False
+        self.shade2 = False
+        self.caseNeighbours = [None, None, None, None]
+
+
 
     def update(self):
         self.x = self.startx + self.offx
@@ -22,27 +29,24 @@ class Case:
         pygame.draw.rect(obraz, [r, g, b], [self.x + self.offx, self.y + self.offy, self.size, self.size],6)
 
     def xd3d(self,x,y):
-        if self.terrain != 0:
-            #pygame.draw.rect(obraz, self.color, [self.x + self.offx + x, self.y + self.offy + y, self.size, self.size])
-            pygame.draw.polygon(obraz, [90,90,90], [(self.x + self.offx, self.y+self.offy+self.size), (self.x+self.offx+x, self.y + self.offy + y+self.size), (self.x + self.offx + x + self.size,self.y + self.offy + y+self.size), (self.x + self.offx + self.size, self.y+self.offy+self.size)])
-            pygame.draw.polygon(obraz, [100,100,100], [(self.x+self.offx+x, self.y + self.offy + y), (self.x+self.offx+x, self.y + self.offy + y + size), (self.x+self.offx, self.y + self.offy + self.size), (self.x + self.offx, self.y+self.offy)])
+        if self.shade1:
+            pygame.draw.polygon(obraz, [70, 70, 70], [(self.x + self.offx, self.y+self.offy+self.size), (self.x+self.offx+x, self.y + self.offy + y+self.size), (self.x + self.offx + x + self.size,self.y + self.offy + y+self.size), (self.x + self.offx + self.size, self.y+self.offy+self.size)])
+        if self.shade2:
+            pygame.draw.polygon(obraz, [100, 100, 100], [(self.x+self.offx+x, self.y + self.offy + y), (self.x+self.offx+x, self.y + self.offy + y + size), (self.x+self.offx, self.y + self.offy + self.size), (self.x + self.offx, self.y+self.offy)])
 
-
-
-    def drawUnder(self):
-        if self.terrain == 1:
-            pygame.draw.circle(obraz, [0, 90, 0], [int(self.x + size / 2 + self.offx), int(self.y + size / 2 + self.offy)],
-                               int(size))
 
     def drawTerrain(self):
         if self.terrain == 1:
             pygame.draw.rect(obraz, self.colorgreen, [self.x + self.offx, self.y+self.offy, self.size, self.size])
         elif self.terrain == 2:
-            pygame.draw.rect(obraz, [40, 0, 10], [self.x + self.offx, self.y+self.offy, self.size, self.size])
-        elif self.terrain == 3: #
-            pygame.draw.rect(obraz, [0, 100, 100], [self.x + self.offx, self.y+self.offy, self.size, self.size])
+            pygame.draw.rect(obraz, self.colorgray, [self.x + self.offx, self.y+self.offy, self.size, self.size])
+        elif self.terrain == 3:
+            pygame.draw.rect(obraz, self.colorblue, [self.x + self.offx, self.y+self.offy, self.size, self.size])
 
 
     def drawCase(self):
         if self.terrain != 0:
             pygame.draw.rect(obraz, self.color, [self.x + self.offx, self.y+self.offy, self.size, self.size], 1)
+
+    def drawId(self):
+        napisy(self.id, self.x + offpos[0] + self.size/2, self.y + offpos[1] + self.size/2, 1)
