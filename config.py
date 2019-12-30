@@ -12,4 +12,4 @@ szachownica = False
 sztuczne3d = True
 showId = False
 watereffects = False
-drawChunkBorders = False
+drawChunkBorders = True
