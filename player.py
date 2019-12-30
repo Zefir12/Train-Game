@@ -21,16 +21,16 @@ class Player:
         self.hand = (0, 0)
 
     def move(self):
-        if pygame.key.get_pressed()[pygame.K_LEFT]:
+        if pygame.key.get_pressed()[pygame.K_a]:
             self.startx -= self.speed*self.leftblock
             self.kierunek = 0
-        if pygame.key.get_pressed()[pygame.K_RIGHT]:
+        if pygame.key.get_pressed()[pygame.K_d]:
             self.startx += self.speed*self.rightblock
             self.kierunek = 1
-        if pygame.key.get_pressed()[pygame.K_UP]:
+        if pygame.key.get_pressed()[pygame.K_w]:
             self.starty -= self.speed*self.upblock
             self.kierunek = 2
-        if pygame.key.get_pressed()[pygame.K_DOWN]:
+        if pygame.key.get_pressed()[pygame.K_s]:
             self.starty += self.speed*self.downblock
             self.kierunek = 3
 
@@ -110,7 +110,7 @@ class Player:
         leftBotLeft = False
 
         for b in listaobiektow:
-            if b.terrain == 0:
+            if b.terrain == rodzajterenu:
                 if b.x < self.x - offpos[0] - 1 < b.x + b.size and b.y < self.y - offpos[1] + 1 < b.y + b.size:
                     leftTopLeft = True
                 if b.x < self.x - offpos[0] + 1 < b.x + b.size and b.y < self.y - offpos[1] - 1 < b.y + b.size:

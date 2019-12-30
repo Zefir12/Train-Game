@@ -44,12 +44,12 @@ def off():
         return True
 
 def moving(x, y, speed):
-    if pygame.key.get_pressed()[pygame.K_a]:
+    if pygame.key.get_pressed()[pygame.K_LEFT]:
         x += speed
-    if pygame.key.get_pressed()[pygame.K_d]:
+    if pygame.key.get_pressed()[pygame.K_RIGHT]:
         x -= speed
-    if pygame.key.get_pressed()[pygame.K_w]:
+    if pygame.key.get_pressed()[pygame.K_UP]:
         y += speed
-    if pygame.key.get_pressed()[pygame.K_s]:
+    if pygame.key.get_pressed()[pygame.K_DOWN]:
         y -= speed
     return x, y

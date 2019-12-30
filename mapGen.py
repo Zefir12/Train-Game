@@ -21,8 +21,8 @@ rozmiarmax = 3
 listakregi = [(0, wymiaryMapyy*size), (wymiaryMapyx*size/6*5, wymiaryMapyy * size/2)]
 
 liczbaskal = 3
-rozmiarskalmin = 4
-rozmiarskalmax = 5
+rozmiarskalmin = 3
+rozmiarskalmax = 4
 liczbaforest = 8
 rozmiarforestmin = 1
 rozmiarforestmax = 5
@@ -63,7 +63,8 @@ for b in range(liczbaforest):
 for b in listaforest:
     for bb in listaMapy:
         if (((b[0] - bb.x) ** 2) + ((b[1] - bb.y) ** 2)) < (bb.size * random.randint(rozmiarforestmin, rozmiarforestmax) * 2) ** 2:
-            bb.terrain = 4
+            if bb.terrain != 0:
+                bb.terrain = 4
 
 #tworzymy kamyki
 for b in range(liczbaskal):
@@ -86,16 +87,10 @@ for b in listaskaly:
 
 
 
-
-
-
-
-
-
-
-
 #############################################################################################################
+### Tworzenie sąsiadów
 for b in listaMapy:
+    print(b.id/idCase)
     for bb in listaMapy:
         if b.id - wymiaryMapyy == bb.id and b.terrain != 0:
             if bb.terrain != 0:

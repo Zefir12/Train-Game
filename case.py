@@ -19,6 +19,7 @@ class Case:
         self.shade1 = False
         self.shade2 = False
         self.caseNeighbours = [None, None, None, None]
+        self.durability = 0
 
 
 
