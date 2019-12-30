@@ -88,8 +88,11 @@ for b in listaskaly:
 
 #############################################################################################################
 ### Tworzenie sąsiadów
+percent = 0
 for b in listaMapy:
-    print(b.id/idCase)
+    if percent < round(b.id/idCase * 100):
+        percent = round(b.id/idCase * 100)
+        print(str(percent) + '%')
     for bb in listaMapy:
         if b.id - wymiaryMapyy == bb.id and b.terrain != 0:
             if bb.terrain != 0:
@@ -128,9 +131,9 @@ for b in listaMapy:
 listaCHUNK = []
 chunkID = 0
 
-for b in range(int(wymiaryMapyx/8)):
-    for bb in range(int(wymiaryMapyy/8)):
-        listaCHUNK.append(Chunk(b * size * 8, bb * size * 8, chunkID))
+for b in range(0, int(wymiaryMapyx), 8):
+    for bb in range(0, int(wymiaryMapyy), 8):
+        listaCHUNK.append(Chunk(b * size, bb * size, chunkID))
         chunkID += 1
 
 
