@@ -4,8 +4,11 @@ wysokoscOkna = 900
 
 
 
-wymiaryMapyx = 50
-wymiaryMapyy = 20
-size = 40
-offpos = [0,0]
-chodzenie = 1
+wymiaryMapyx = 80
+wymiaryMapyy = 30
+size = 30
+offpos = [0, 0]
+chodzenie = 0
+szachownica = False
+zaokraglanie = False
+sztuczne3d = True

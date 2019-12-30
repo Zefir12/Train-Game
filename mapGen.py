@@ -13,26 +13,34 @@ for b in range(wymiaryMapyx):
         listaMapy.append(Case(b*size, bb*size, idCase))
         idCase += 1
 
-for b in listaMapy:
-    b.terrain = random.choice(chances)
 
-'''for b in listaMapy:
-    for bb in listaMapy:
-        if abs(b.x - bb.x) < 2*size and abs(b.y - bb.y) < 2*size and bb.terrain == 0 and b.terrain == 1:
-            b.terrain = 3'''
 
-a=2
+a = random.randint(3,8) # teren
+
+rozmiarmin = 0
+rozmiarmax = 3
+listakregi = [(0, wymiaryMapyy*size), (wymiaryMapyx*size/6*5, wymiaryMapyy * size/2)]
+
 for b in range(a):
-    c = random.randint(0, idHEX)
-    for bb in listHEX:
+    c = random.randint(0, idCase)
+    for bb in listaMapy:
         if bb.id == c:
-            listakregi.append((bb.center[0], bb.center[1]))
+            listakregi.append((bb.x, bb.y))
 
-
+#stworzenie duzych wysp
 for b in listakregi:
-    for bb in listHEX:
-        if (((b[0] - bb.center[0]) ** 2) + ((b[1] - bb.center[1]) ** 2)) < (bb.size * 0.889 * random.randint(minrozmiarjezioro, maksrozmiarjezioro)*2) ** 2:
-            bb.terrain = 3
+    for bb in listaMapy:
+        if (((b[0] - bb.x) ** 2) + ((b[1] - bb.y) ** 2)) < (bb.size * random.randint(rozmiarmax, rozmiarmax)*4)**2:
+            bb.terrain = 1
+
+#dobicie dodatkowych wysepek pomiedzy duzymi wyspami
+for b in listakregi:
+    for bb in listakregi:
+        temp = ((b[0]+bb[0])/2, (b[1]+bb[1])/2)
+        for bbb in listaMapy:
+            if (((temp[0] - bbb.x) ** 2) + ((temp[1] - bbb.y) ** 2)) < (bbb.size * random.randint(rozmiarmax, rozmiarmax) * 2) ** 2:
+                bbb.terrain = 1
+
 
 
 with open('mapa.txt', 'wb') as obiekt:
