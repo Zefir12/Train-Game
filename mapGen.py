@@ -1,19 +1,12 @@
 from config import *
 from case import Case
+from chunk import Chunk
 import pickle
 import random
 
 listaMapy = []
 idCase = 0
 chances = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-
-
-for b in range(wymiaryMapyx):
-    for bb in range(wymiaryMapyy):
-        listaMapy.append(Case(b*size, bb*size, idCase))
-        idCase += 1
-
-
 
 a = random.randint(3,8)
 rozmiarmin = 0
@@ -30,6 +23,12 @@ listaforest = []
 listaskaly = []
 
 
+
+
+for b in range(wymiaryMapyx):
+    for bb in range(wymiaryMapyy):
+        listaMapy.append(Case(b*size, bb*size, idCase))
+        idCase += 1
 
 for b in range(a):
     c = random.randint(0, idCase)
@@ -89,11 +88,8 @@ for b in listaskaly:
 
 #############################################################################################################
 ### Tworzenie sąsiadów
-percent = 0
 for b in listaMapy:
-    if percent < round(b.id/idCase * 100):
-        percent = round(b.id/idCase * 100)
-        print(str(percent) + '%')
+    print(b.id/idCase)
     for bb in listaMapy:
         if b.id - wymiaryMapyy == bb.id and b.terrain != 0:
             if bb.terrain != 0:
@@ -130,17 +126,23 @@ for b in listaMapy:
 ### Creating chunks
 
 listaCHUNK = []
+chunkID = 0
 
-for b in range(0, int(wymiaryMapyx), 8):
-    for bb in range(0, int(wymiaryMapyy), 8):
-        listaCHUNK.append((b * size, bb * size))
+for b in range(int(wymiaryMapyx/8)):
+    for bb in range(int(wymiaryMapyy/8)):
+        listaCHUNK.append(Chunk(b * size * 8, bb * size * 8, chunkID))
+        chunkID += 1
+
+
+### Putting cases into chunks
+for b in listaCHUNK:
+    for bb in listaMapy:
+        if b.x < bb.x+1 < b.x + size * 8 and b.y < bb.y+1 < b.y + size * 8:
+            b.caselist.append(bb)
+
 
 with open('chunks.txt', 'wb') as obiekt:
     pickle.dump(listaCHUNK, obiekt)
-
-
-
-
 
 with open('mapa.txt', 'wb') as obiekt:
     pickle.dump(listaMapy, obiekt)

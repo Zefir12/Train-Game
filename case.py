@@ -20,6 +20,7 @@ class Case:
         self.shade2 = False
         self.caseNeighbours = [None, None, None, None]
         self.durability = 0
+        self.chunk = None
 
     def update(self):
         self.x = self.startx + self.offx

@@ -39,7 +39,7 @@ class Player:
         self.y = self.starty + self.offy*2
 
     def drawHand(self):
-        pygame.draw.circle(obraz,[255,0,0], [int(self.hand[0]), int(self.hand[1])], int(self.size/3))
+        pygame.draw.circle(obraz, [255, 0, 0], [int(self.hand[0]), int(self.hand[1])], int(self.size/3))
 
     def setHand(self, rodzajchodzenia):
         if self.kierunek == 0:
@@ -90,13 +90,13 @@ class Player:
         for b in listaobiektow:
             if b.x - self.size < self.x - offpos[0] < b.x + b.size + self.size and b.y - self.size < self.y - offpos[1] < b.y + b.size + self.size:
                 if b.terrain == rodzajterenu:
-                    if (self.x - offpos[0] + self.speed >= b.x):
+                    if self.x - offpos[0] + self.speed >= b.x:
                         self.startx += self.speed
-                    if (self.x - offpos[0] - self.speed <= b.x + b.size):
+                    if self.x - offpos[0] - self.speed <= b.x + b.size:
                         self.startx -= self.speed
-                    if (self.y - offpos[1] + self.speed >= b.y):
+                    if self.y - offpos[1] + self.speed >= b.y:
                         self.starty += self.speed
-                    if (self.y - offpos[1] - self.speed <= b.y + b.size):
+                    if self.y - offpos[1] - self.speed <= b.y + b.size:
                         self.starty -= self.speed
 
     def hitboxy2(self, listaobiektow, rodzajterenu):
