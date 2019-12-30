@@ -19,6 +19,10 @@ class Player:
         self.downblock = 1
         self.kierunek = 0
         self.hand = (0, 0)
+        self.eq = []
+        self.wielkoscEQ = 10
+        for i in range(10):
+            self.eq.append(0)
 
     def move(self):
         if pygame.key.get_pressed()[pygame.K_a]:
@@ -53,9 +57,15 @@ class Player:
 
     def handWorking(self,listaobiektow):
         for b in listaobiektow:
-            if b.x < self.hand[0] - offpos[0] < b.x + b.size and b.y < self.hand[1] - offpos[1] < b.y + b.size:
-                b.drawHighlight(255,0,0)
-
+            if b.terrain != 1:
+                if b.x < self.hand[0] - offpos[0] < b.x + b.size and b.y < self.hand[1] - offpos[1] < b.y + b.size:
+                    b.znieszczenie += 1
+                    if b.znieszczenie == 120:
+                        if b.terrain == 2:
+                            self.eq[0] += 1
+                        if b.terrain == 4:
+                            self.eq[1] += 1
+                        b.terrain = 1
 
 
 
