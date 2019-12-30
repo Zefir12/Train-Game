@@ -131,9 +131,9 @@ for b in listaMapy:
 
 listaCHUNK = []
 
-for b in range(int(wymiaryMapyx/8)):
-    for bb in range(int(wymiaryMapyy/8)):
-        listaCHUNK.append((b * size * 8, bb * size * 8))
+for b in range(0, int(wymiaryMapyx), 8):
+    for bb in range(0, int(wymiaryMapyy), 8):
+        listaCHUNK.append((b * size, bb * size))
 
 with open('chunks.txt', 'wb') as obiekt:
     pickle.dump(listaCHUNK, obiekt)
