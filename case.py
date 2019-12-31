@@ -36,16 +36,25 @@ class Case:
     def drawHighlight(self, r, g, b, x, y, thickness):
         pygame.draw.rect(obraz, [r, g, b], [self.x + self.offx, self.y + self.offy, self.size, self.size], thickness)
         if self.shade1:
-            pygame.draw.polygon(obraz, [r, g, b], [(self.x + self.offx, self.y + self.offy + self.size),
-                                                      (self.x + self.offx + x, self.y + self.offy + y + self.size), (
-                                                      self.x + self.offx + x + self.size,
-                                                      self.y + self.offy + y + self.size),
-                                                      (self.x + self.offx + self.size, self.y + self.offy + self.size)], thickness)
+            if y > 0:
+                pygame.draw.polygon(obraz, [r, g, b], [(self.x + self.offx, self.y + self.offy + self.size),
+                                                          (self.x + self.offx + x, self.y + self.offy + y + self.size), (
+                                                          self.x + self.offx + x + self.size,
+                                                          self.y + self.offy + y + self.size),
+                                                          (self.x + self.offx + self.size, self.y + self.offy + self.size)], thickness)
         if self.shade2:
-            pygame.draw.polygon(obraz, [r, g, b], [(self.x + self.offx + x, self.y + self.offy + y),
-                                                         (self.x + self.offx + x, self.y + self.offy + y + size),
-                                                         (self.x + self.offx, self.y + self.offy + self.size),
-                                                         (self.x + self.offx, self.y + self.offy)], thickness)
+            if x < 0:
+                pygame.draw.polygon(obraz, [r, g, b], [(self.x + self.offx + x, self.y + self.offy + y),
+                                                             (self.x + self.offx + x, self.y + self.offy + y + size),
+                                                             (self.x + self.offx, self.y + self.offy + self.size),
+                                                             (self.x + self.offx, self.y + self.offy)], thickness)
+        if self.shade3:
+            if y < 0:
+                pygame.draw.polygon(obraz, [r, g, b], [(self.x + self.offx, self.y + self.offy), (self.x+self.offx + x, self.y + self.offy + y), (self.x + self.offx  + self.size + x, self.y + self.offy + y), (self.x + self.offx  + self.size, self.y + self.offy)], thickness)
+        if self.shade4:
+            if x > 0:
+                pygame.draw.polygon(obraz, [r, g, b], [(self.x + self.offx + self.size, self.y + self.offy + self.size), (self.x + self.offx + self.size + x, self.y + self.offy + self.size + y), (self.x + self.offx + self.size + x, self.y+self.offy + y), (self.x + self.offx + self.size, self.y + self.offy)], thickness)
+
 
     def xd3d(self, x, y):
         if self.shade1:

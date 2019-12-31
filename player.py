@@ -71,6 +71,10 @@ class Player:
                         if b.terrain == 0:
                             self.eq[1] += 1
                             b.terrain = 5
+                            b.caseNeighbours[3] = b.id - wymiaryMapyy
+                            b.caseNeighbours[1] = b.id + wymiaryMapyy
+                            b.caseNeighbours[2] = b.id + 1
+                            b.caseNeighbours[0] = b.id - 1
 
     def terrainblock(self):
         self.leftblock = 1
