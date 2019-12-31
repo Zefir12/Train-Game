@@ -8,11 +8,11 @@ listaMapy = []
 idCase = 0
 chances = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 
-a = random.randint(3,8)
+
+a = random.randint(3, 8)
 rozmiarmin = 0
 rozmiarmax = 3
 listakregi = [(0, wymiaryMapyy*size), (wymiaryMapyx*size/6*5, wymiaryMapyy * size/2)]
-
 liczbaskal = 3
 rozmiarskalmin = 3
 rozmiarskalmax = 4
@@ -127,7 +127,6 @@ for b in listaMapy:
 
 ###############################################################################################################
 ### Creating chunks
-
 listaCHUNK = []
 chunkID = 0
 
@@ -147,5 +146,3 @@ for b in listaCHUNK:
 with open('chunks.txt', 'wb') as obiekt:
     pickle.dump(listaCHUNK, obiekt)
 
-with open('mapa.txt', 'wb') as obiekt:
-    pickle.dump(listaMapy, obiekt)

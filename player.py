@@ -67,10 +67,6 @@ class Player:
                             self.eq[1] += 1
                         b.terrain = 1
 
-
-
-
-
     def terrainblock(self):
         self.leftblock = 1
         self.rightblock = 1

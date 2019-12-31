@@ -15,8 +15,8 @@ maciek = Player(size/2, wymiaryMapyy*size - size/2, 0)
 def main(Run, offpos):
     i=0
     while Run:
-        listVisibleBlocks = []
 
+        listVisibleBlocks = []
         for b in listCHUNKS:
             if 0 - size * 9 < b.x + offpos[0] * 2 < szerokoscOkna + size and 0 - size * 9 < b.y + offpos[1] * 2 < wysokoscOkna + size:
                 for bb in b.caselist:
@@ -29,20 +29,17 @@ def main(Run, offpos):
         if i > 250:
             i = 0
 
-        offpos[0], offpos[1] = moving(offpos[0], offpos[1], 3)
+        offpos[0], offpos[1] = moving(offpos[0], offpos[1], cameraspeed)
 
         if maciek.x < size*8:
             offpos[0] += 1
-            maciek.x += 1
         if maciek.x > szerokoscOkna - size*8:
             offpos[0] -= 1
-            maciek.x -= 1
         if maciek.y < size*8:
             offpos[1] += 1
-            maciek.y += 1
         if maciek.y > wysokoscOkna - size*8:
             offpos[1] -= 1
-            maciek.y -= 1
+
 
 
         for b in listVisibleBlocks:
@@ -65,10 +62,13 @@ def main(Run, offpos):
             if b.x < mouse[0] - offpos[0] < b.x + b.size and b.y < mouse[1] - offpos[1] < b.y + b.size:
                 b.drawHighlight(0, 40, 100)
                 napisy(b.caseNeighbours, 0, 0, 0)
+            if b.x < maciek.hand[0] - offpos[0] < b.x + b.size and b.y < maciek.hand[1] - offpos[1] < b.y + b.size:
+                b.drawHighlight(200, 40, 10)
 
         if drawChunkBorders:
             for b in listCHUNKS:
                 pygame.draw.rect(obraz, [200, 0, 0], [b.x + offpos[0]*2, b.y + offpos[1]*2, size*8, size*8], 2)
+
 
         maciek.offx, maciek.offy = offpos[0], offpos[1]
         maciek.move()
@@ -77,8 +77,6 @@ def main(Run, offpos):
         maciek.drawHand()
         maciek.terrainblock()
         maciek.handWorking(listVisibleBlocks)
-        print("Ilosc skaly",maciek.eq[0])
-        print("Ilosc drewna",maciek.eq[1])
         if chodzenie == 0:
             maciek.mapblock()
             maciek.htiboxy(listVisibleBlocks, 0)
