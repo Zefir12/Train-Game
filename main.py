@@ -18,7 +18,7 @@ def main(Run, offpos):
 
         listVisibleBlocks = []
         for b in listCHUNKS:
-            if 0 - size * 9 < b.x + offpos[0] * 2 < szerokoscOkna + size and 0 - size * 9 < b.y + offpos[1] * 2 < wysokoscOkna + size:
+            if 0 - size * 7 < b.x + offpos[0] * 2 < szerokoscOkna - size and 0 - size * 7 < b.y + offpos[1] * 2 < wysokoscOkna - size:
                 for bb in b.caselist:
                     listVisibleBlocks.append(bb)
 
@@ -48,7 +48,7 @@ def main(Run, offpos):
 
         for b in listVisibleBlocks:
             if sztuczne3d:
-                b.xd3d(shade[0], shade[1])
+                b.xd3d((szerokoscOkna/2 - (b.x + offpos[0]))/30, (wysokoscOkna/2-(b.y + offpos[1]))/20)
 
         for b in listVisibleBlocks:
             if drawterrain:

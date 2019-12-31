@@ -19,6 +19,8 @@ class Case:
         self.terrain = 0
         self.shade1 = False
         self.shade2 = False
+        self.shade3 = False
+        self.shade4 = False
         self.caseNeighbours = [None, None, None, None]
         self.durability = 0
         self.chunk = None
@@ -47,9 +49,17 @@ class Case:
 
     def xd3d(self, x, y):
         if self.shade1:
-            pygame.draw.polygon(obraz, [70, 70, 70], [(self.x + self.offx, self.y + self.offy + self.size), (self.x+self.offx + x, self.y + self.offy + y + self.size), (self.x + self.offx + x + self.size,self.y + self.offy + y+self.size), (self.x + self.offx + self.size, self.y+self.offy+self.size)])
+            if y > 0:
+                pygame.draw.polygon(obraz, [70, 70, 70], [(self.x + self.offx, self.y + self.offy + self.size), (self.x+self.offx + x, self.y + self.offy + y + self.size), (self.x + self.offx + x + self.size,self.y + self.offy + y+self.size), (self.x + self.offx + self.size, self.y+self.offy+self.size)])
         if self.shade2:
-            pygame.draw.polygon(obraz, [100, 100, 100], [(self.x + self.offx + x, self.y + self.offy + y), (self.x+self.offx + x, self.y + self.offy + y + size), (self.x + self.offx, self.y + self.offy + self.size), (self.x + self.offx, self.y+self.offy)])
+            if x < 0:
+                pygame.draw.polygon(obraz, [130, 130, 130], [(self.x + self.offx + x, self.y + self.offy + y), (self.x+self.offx + x, self.y + self.offy + y + size), (self.x + self.offx, self.y + self.offy + self.size), (self.x + self.offx, self.y+self.offy)])
+        if self.shade4:
+            if x > 0:
+                pygame.draw.polygon(obraz, [20, 20, 20], [(self.x + self.offx + self.size, self.y + self.offy + self.size), (self.x + self.offx + self.size + x, self.y + self.offy + self.size + y), (self.x + self.offx + self.size + x, self.y+self.offy + y), (self.x + self.offx + self.size, self.y + self.offy)])
+        if self.shade3:
+            if y < 0:
+                pygame.draw.polygon(obraz, [70, 70, 70], [(self.x + self.offx, self.y + self.offy), (self.x+self.offx + x, self.y + self.offy + y), (self.x + self.offx  + self.size + x, self.y + self.offy + y), (self.x + self.offx  + self.size, self.y + self.offy)])
 
     def drawTerrain(self):
         if self.terrain == 1:

@@ -118,6 +118,10 @@ for b in listaMapy:
         b.shade1 = True
     if b.caseNeighbours[3] is None and b.terrain != 0:
         b.shade2 = True
+    if b.caseNeighbours[0] is None and b.terrain != 0:
+        b.shade3 = True
+    if b.caseNeighbours[1] is None and b.terrain != 0:
+        b.shade4 = True
 
 
 for b in listaMapy:
