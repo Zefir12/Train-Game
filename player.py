@@ -21,7 +21,7 @@ class Player:
         self.hand = (0, 0)
         self.eq = []
         self.wielkoscEQ = 10
-        for i in range(10):
+        for i in range(self.wielkoscEQ):
             self.eq.append(0)
 
     def move(self):
@@ -55,17 +55,22 @@ class Player:
         if self.kierunek == 3:
             self.hand = (self.x + self.size*rodzajchodzenia, self.y + self.size*rodzajchodzenia + self.size * 2)
 
-    def handWorking(self,listaobiektow):
+    def handWorking(self,listaobiektow, terrain, speed):
         for b in listaobiektow:
-            if b.terrain != 1:
+            if b.terrain != 1 and b.terrain != 5:
                 if b.x < self.hand[0] - offpos[0] < b.x + b.size and b.y < self.hand[1] - offpos[1] < b.y + b.size:
-                    b.znieszczenie += 1
-                    if b.znieszczenie == 120:
+                    if b.destruction > 0:
+                        b.destruction -= speed
+                    if b.destruction < 1:
                         if b.terrain == 2:
                             self.eq[0] += 1
+                            b.terrain = 1
                         if b.terrain == 4:
                             self.eq[1] += 1
-                        b.terrain = 1
+                            b.terrain = 1
+                        if b.terrain == 0:
+                            self.eq[1] += 1
+                            b.terrain = 5
 
     def terrainblock(self):
         self.leftblock = 1
@@ -171,3 +176,4 @@ class Player:
             pygame.draw.circle(obraz, [0, 0, 0], [int(self.x), int(self.y)], int(self.size))
         else:
             pygame.draw.rect(obraz, self.color, [self.x, self.y, self.size*2, self.size*2])
+            pygame.draw.circle(obraz, [0, 0, 0], [int(self.x+self.size), int(self.y+self.size)], int(self.size))

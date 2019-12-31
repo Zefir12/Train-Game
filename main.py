@@ -48,7 +48,7 @@ def main(Run, offpos):
 
         for b in listVisibleBlocks:
             if sztuczne3d:
-                b.xd3d(-10, 20)
+                b.xd3d(shade[0], shade[1])
 
         for b in listVisibleBlocks:
             if drawterrain:
@@ -60,10 +60,15 @@ def main(Run, offpos):
             if showId:
                 b.drawId()
             if b.x < mouse[0] - offpos[0] < b.x + b.size and b.y < mouse[1] - offpos[1] < b.y + b.size:
-                b.drawHighlight(0, 40, 100)
+                b.drawHighlight(0, 40, 100, shade[0], shade[1], 2)
                 napisy(b.caseNeighbours, 0, 0, 0)
             if b.x < maciek.hand[0] - offpos[0] < b.x + b.size and b.y < maciek.hand[1] - offpos[1] < b.y + b.size:
-                b.drawHighlight(200, 40, 10)
+                if b.terrain != 0:
+                    b.drawHighlight(200, 40, 10, shade[0], shade[1], 3)
+            for number in range(10):
+                if b.destruction < 100:
+                    b.destruction += 1
+            b.drawDestruction()
 
         if drawChunkBorders:
             for b in listCHUNKS:
@@ -76,7 +81,7 @@ def main(Run, offpos):
         maciek.setHand(chodzenie)
         maciek.drawHand()
         maciek.terrainblock()
-        maciek.handWorking(listVisibleBlocks)
+        maciek.handWorking(listVisibleBlocks, 1, 11)
         if chodzenie == 0:
             maciek.mapblock()
             maciek.htiboxy(listVisibleBlocks, 0)

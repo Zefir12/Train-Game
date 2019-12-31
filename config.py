@@ -2,9 +2,9 @@
 
 szerokoscOkna = 1800
 wysokoscOkna = 900
-wymiaryMapyx = 70
-wymiaryMapyy = 50
-size = 20
+wymiaryMapyx = 100
+wymiaryMapyy = 40
+size = 40
 offpos = [0, 0]
 chodzenie = 0
 drawterrain = True
@@ -14,3 +14,4 @@ showId = False
 watereffects = False
 drawChunkBorders = True
 cameraspeed = 20
+shade = (-10,20)

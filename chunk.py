@@ -1,4 +1,4 @@
-from funkcje import *
+from config import *
 
 class Chunk:
     def __init__(self, x, y, id):

@@ -1,4 +1,4 @@
-from config import *
+from funkcje import *
 from case import Case
 from chunk import Chunk
 import pickle
