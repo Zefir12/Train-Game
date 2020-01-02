@@ -1,7 +1,7 @@
 from funkcje import *
 
 class Case:
-    def __init__(self, x, y, id):
+    def __init__(self, x, y, id, size):
         self.x = x
         self.y = y
         self.id = id
@@ -15,7 +15,7 @@ class Case:
         self.colorgray = [96,96,96]
         self.colorblue = [0,226,255]
         self.colorbrown = [165,42,42]
-        self.size = Settings.size
+        self.size = size
         self.terrain = 0
         self.shade1 = False
         self.shade2 = False
@@ -45,7 +45,7 @@ class Case:
         if self.shade2:
             if x < 0:
                 pygame.draw.polygon(obraz, [r, g, b], [(self.x + self.offx + x, self.y + self.offy + y),
-                                                             (self.x + self.offx + x, self.y + self.offy + y + Settings.size),
+                                                             (self.x + self.offx + x, self.y + self.offy + y + self.size),
                                                              (self.x + self.offx, self.y + self.offy + self.size),
                                                              (self.x + self.offx, self.y + self.offy)], thickness)
         if self.shade3:
@@ -62,7 +62,7 @@ class Case:
                 pygame.draw.polygon(obraz, [70, 70, 70], [(self.x + self.offx, self.y + self.offy + self.size), (self.x+self.offx + x, self.y + self.offy + y + self.size), (self.x + self.offx + x + self.size,self.y + self.offy + y+self.size), (self.x + self.offx + self.size, self.y+self.offy+self.size)])
         if self.shade2:
             if x < 0:
-                pygame.draw.polygon(obraz, [130, 130, 130], [(self.x + self.offx + x, self.y + self.offy + y), (self.x+self.offx + x, self.y + self.offy + y + Settings.size), (self.x + self.offx, self.y + self.offy + self.size), (self.x + self.offx, self.y+self.offy)])
+                pygame.draw.polygon(obraz, [130, 130, 130], [(self.x + self.offx + x, self.y + self.offy + y), (self.x+self.offx + x, self.y + self.offy + y + self.size), (self.x + self.offx, self.y + self.offy + self.size), (self.x + self.offx, self.y+self.offy)])
         if self.shade4:
             if x > 0:
                 pygame.draw.polygon(obraz, [20, 20, 20], [(self.x + self.offx + self.size, self.y + self.offy + self.size), (self.x + self.offx + self.size + x, self.y + self.offy + self.size + y), (self.x + self.offx + self.size + x, self.y+self.offy + y), (self.x + self.offx + self.size, self.y + self.offy)])

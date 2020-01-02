@@ -2,7 +2,7 @@ from funkcje import *
 
 
 class Player:
-    def __init__(self, x, y, id):
+    def __init__(self, x, y, id, size, sizex, sizey):
         self.x = x
         self.y = y
         self.startx = self.x
@@ -11,7 +11,10 @@ class Player:
         self.offy = 0
         self.id = id
         self.color = [90, 20, 5]
-        self.size = Settings.size/3
+        self.size = size/3
+        self.mapsize = size
+        self.sizex = sizex
+        self.sizey = sizey
         self.speed = 2
         self.leftblock = 1
         self.rightblock = 1
@@ -71,8 +74,8 @@ class Player:
                         if b.terrain == 0:
                             self.eq[1] += 1
                             b.terrain = 5
-                            b.caseNeighbours[3] = b.id - Settings.wymiaryMapyy
-                            b.caseNeighbours[1] = b.id + Settings.wymiaryMapyy
+                            b.caseNeighbours[3] = b.id - self.sizey
+                            b.caseNeighbours[1] = b.id + self.sizey
                             b.caseNeighbours[2] = b.id + 1
                             b.caseNeighbours[0] = b.id - 1
 
@@ -83,23 +86,23 @@ class Player:
         self.downblock = 1
 
     def mapblock(self):
-        if self.startx < 0 + Settings.size/3:
+        if self.startx < 0 +self.size/3:
             self.startx += self.speed
-        if self.startx > (Settings.wymiaryMapyx * Settings.size) - Settings.size/3:
+        if self.startx > (self.sizex * self.mapsize) - self.mapsize/3:
             self.startx -= self.speed
-        if self.starty < 0 + Settings.size/3:
+        if self.starty < 0 + self.size/3:
             self.starty += self.speed
-        if self.starty > (Settings.wymiaryMapyy * Settings.size) - Settings.size/3:
+        if self.starty > (self.sizey * self.mapsize) - self.mapsize/3:
             self.starty -= self.speed
 
     def mapblock2(self):
         if self.startx < 0:
             self.startx += self.speed
-        if self.startx > (Settings.wymiaryMapyx * Settings.size) - self.size*2:
+        if self.startx > (self.sizex * self.mapsize) - self.size*2:
             self.startx -= self.speed
         if self.starty < 0:
             self.starty += self.speed
-        if self.starty > (Settings.wymiaryMapyy * Settings.size) - self.size*2:
+        if self.starty > (self.sizey * self.mapsize) - self.size*2:
             self.starty -= self.speed
 
     def htiboxy(self, listaobiektow, rodzajterenu):

@@ -1,7 +1,6 @@
 from funkcje import *
 
 
-
 def settingsMenu(Run):
     while Run:
         mouse = pygame.mouse.get_pos()
@@ -29,8 +28,5 @@ def settingsMenu(Run):
         if przycisk(Settings.szerokoscOkna - 200, Settings.wysokoscOkna - 60, 200, 60, mouse[0], mouse[1],
                     click[0], r=100, g=100, b=100, text="Back", textsize=0):
             break
-
-
-
 
         off()

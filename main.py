@@ -7,16 +7,16 @@ import pickle
 
 
 
-maciek = Player(Settings.size/2, Settings.wymiaryMapyy*Settings.size - Settings.size/2, 0)
 
 
-def main(Run, offpos, listCHUNKS):
+
+def main(Run, offpos, map):
     i = 0
+    maciek = Player(map.wymiaryMapyx / 2, map.wymiaryMapyy / 2, 0, map.size, map.wymiaryMapyx, map.wymiaryMapyy)
     while Run:
-
         listVisibleBlocks = []
-        for b in listCHUNKS:
-            if 0 - Settings.size * 8 < b.x + offpos[0] * 2 < Settings.szerokoscOkna + Settings.size and 0 - Settings.size * 9 < b.y + offpos[1] * 2 < Settings.wysokoscOkna + Settings.size:
+        for b in map.chunklist:
+            if 0 - map.size * 8 < b.x + offpos[0] * 2 < Settings.szerokoscOkna + map.size and 0 - map.size * 9 < b.y + offpos[1] * 2 < Settings.wysokoscOkna + map.size:
                 for bb in b.caselist:
                     listVisibleBlocks.append(bb)
 
@@ -27,17 +27,18 @@ def main(Run, offpos, listCHUNKS):
         if i > 250:
             i = 0
 
-        offpos[0], offpos[1] = moving(offpos[0], offpos[1], Settings.cameraspeed)
-
-        if maciek.x < Settings.size*8:
-            offpos[0] += 1
-        if maciek.x > Settings.szerokoscOkna - Settings.size*8:
-            offpos[0] -= 1
-        if maciek.y < Settings.size*8:
-            offpos[1] += 1
-        if maciek.y > Settings.wysokoscOkna - Settings.size*8:
-            offpos[1] -= 1
-
+        if Settings.freecamera:
+            offpos[0], offpos[1] = moving(offpos[0], offpos[1], Settings.cameraspeed)
+            if maciek.x < map.size*8:
+                offpos[0] += 1
+            if maciek.x > Settings.szerokoscOkna - map.size*8:
+                offpos[0] -= 1
+            if maciek.y < map.size*8:
+                offpos[1] += 1
+            if maciek.y > Settings.wysokoscOkna - map.size*8:
+                offpos[1] -= 1
+        else:
+            offpos[0], offpos[1] = (-maciek.startx)/2 + Settings.szerokoscOkna/4, (-maciek.starty)/2 + Settings.wysokoscOkna/4
 
 
         for b in listVisibleBlocks:
@@ -69,8 +70,8 @@ def main(Run, offpos, listCHUNKS):
             b.drawDestruction()
 
         if Settings.drawChunkBorders:
-            for b in listCHUNKS:
-                pygame.draw.rect(obraz, [200, 0, 0], [b.x + offpos[0]*2, b.y + offpos[1]*2, Settings.size*8, Settings.size*8], 2)
+            for b in map.chunklist:
+                pygame.draw.rect(obraz, [200, 0, 0], [b.x + offpos[0]*2, b.y + offpos[1]*2, map.size*8, map.size*8], 2)
 
 
         maciek.offx, maciek.offy = offpos[0], offpos[1]
