@@ -10,7 +10,7 @@ with open('chunks.txt', 'rb') as obiekt:
 
 
 maciek = Player(size/2, wymiaryMapyy*size - size/2, 0)
-zombie = Mobek(size/2, wymiaryMapyy*size - size/2, 0)
+zombie = Mobek(size/2 + 20, wymiaryMapyy*size - size/2-20, 0)
 
 def main(Run, offpos):
     i=0
@@ -85,7 +85,12 @@ def main(Run, offpos):
         ######mobki
         zombie.offx, zombie.offy = offpos[0], offpos[1]
         zombie.update()
+        zombie.IA()
+        zombie.mapblock()
         zombie.draw()
+        zombie.htiboxy(listVisibleBlocks, 0)
+        zombie.htiboxy(listVisibleBlocks, 2)
+        zombie.htiboxy(listVisibleBlocks, 4)
         ######
         if chodzenie == 0:
             maciek.mapblock()

@@ -2,8 +2,8 @@
 
 szerokoscOkna = 1800
 wysokoscOkna = 900
-wymiaryMapyx = 400
-wymiaryMapyy = 200
+wymiaryMapyx = 100
+wymiaryMapyy = 20
 size = 20
 offpos = [0, 0]
 chodzenie = 0
