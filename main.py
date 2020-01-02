@@ -18,7 +18,7 @@ def main(Run, offpos):
 
         listVisibleBlocks = []
         for b in listCHUNKS:
-            if 0 - size * 9 < b.x + offpos[0] * 2 < szerokoscOkna + size and 0 - size * 9 < b.y + offpos[1] * 2 < wysokoscOkna + size:
+            if 0 - size * 8 < b.x + offpos[0] * 2 < szerokoscOkna + size and 0 - size * 9 < b.y + offpos[1] * 2 < wysokoscOkna + size:
                 for bb in b.caselist:
                     listVisibleBlocks.append(bb)
 
@@ -48,7 +48,7 @@ def main(Run, offpos):
 
         for b in listVisibleBlocks:
             if sztuczne3d:
-                b.xd3d(-10, 20)
+                b.xd3d((szerokoscOkna/2 - (b.x + offpos[0]))/shadowDepth, (wysokoscOkna/2-(b.y + offpos[1]))/shadowDepth)
 
         for b in listVisibleBlocks:
             if drawterrain:
@@ -60,10 +60,15 @@ def main(Run, offpos):
             if showId:
                 b.drawId()
             if b.x < mouse[0] - offpos[0] < b.x + b.size and b.y < mouse[1] - offpos[1] < b.y + b.size:
-                b.drawHighlight(0, 40, 100)
+                b.drawHighlight(0, 40, 100, (szerokoscOkna/2 - (b.x + offpos[0]))/shadowDepth,  (wysokoscOkna/2-(b.y + offpos[1]))/shadowDepth, 2)
                 napisy(b.caseNeighbours, 0, 0, 0)
             if b.x < maciek.hand[0] - offpos[0] < b.x + b.size and b.y < maciek.hand[1] - offpos[1] < b.y + b.size:
-                b.drawHighlight(200, 40, 10)
+                if b.terrain != 0:
+                    b.drawHighlight(200, 40, 10, (szerokoscOkna/2 - (b.x + offpos[0]))/shadowDepth,  (wysokoscOkna/2-(b.y + offpos[1]))/shadowDepth, 3)
+            for number in range(10):
+                if b.destruction < 100:
+                    b.destruction += 1
+            b.drawDestruction()
 
         if drawChunkBorders:
             for b in listCHUNKS:
@@ -76,7 +81,7 @@ def main(Run, offpos):
         maciek.setHand(chodzenie)
         maciek.drawHand()
         maciek.terrainblock()
-        maciek.handWorking(listVisibleBlocks)
+        maciek.handWorking(listVisibleBlocks, 1, 11)
         if chodzenie == 0:
             maciek.mapblock()
             maciek.htiboxy(listVisibleBlocks, 0)
