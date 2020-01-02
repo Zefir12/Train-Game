@@ -71,7 +71,6 @@ class Mob():
 
     def draw(self):
             pygame.draw.circle(obraz, self.color, [int(self.x), int(self.y)], int(self.size))
-            pygame.draw.circle(obraz, [0, 0, 255], [int(self.x), int(self.y)], self.range, 3)
 
     def mapblock(self):
         if self.startx < 0 + self.size:
