@@ -24,6 +24,7 @@ class Player:
         self.hand = (0, 0)
         self.eq = []
         self.wielkoscEQ = 10
+        self.hp = 100
         for i in range(self.wielkoscEQ):
             self.eq.append(0)
 

@@ -1,6 +1,7 @@
 from funkcje import *
 from case import Case
 from player import Player
+from mob import Mob
 import pickle
 
 
@@ -13,6 +14,7 @@ import pickle
 def main(Run, offpos, map):
     i = 0
     maciek = Player(map.wymiaryMapyx / 2, map.wymiaryMapyy / 2, 0, map.size, map.wymiaryMapyx, map.wymiaryMapyy)
+    zombie = Mob(map.wymiaryMapyx / 2, map.wymiaryMapyy / 2, 0, map.size, map.wymiaryMapyx, map.wymiaryMapyy)
     while Run:
         listVisibleBlocks = []
         for b in map.chunklist:
@@ -92,6 +94,15 @@ def main(Run, offpos, map):
             maciek.hitboxy2(listVisibleBlocks, 2)
             maciek.hitboxy2(listVisibleBlocks, 4)
         maciek.draw()
+        zombie.offx, zombie.offy = offpos[0], offpos[1]
+        zombie.draw()
+        zombie.update()
+        zombie.AI()
+        zombie.mapblock()
+        zombie.hitboxy(listVisibleBlocks, 0)
+        zombie.hitboxy(listVisibleBlocks, 2)
+        zombie.hitboxy(listVisibleBlocks, 4)
+        zombie.hitV2(maciek)
 
         Run = off()
 
