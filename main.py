@@ -93,12 +93,12 @@ def main(Run, offpos, map):
         zombie.offx, zombie.offy = offpos[0], offpos[1]
         zombie.draw()
         zombie.update()
-        zombie.AI()
+        zombie.AI(maciek.startx, maciek.starty)
         zombie.mapblock()
         zombie.hitboxy(listVisibleBlocks, 0)
         zombie.hitboxy(listVisibleBlocks, 2)
         zombie.hitboxy(listVisibleBlocks, 4)
-        zombie.hitV2(maciek)
+        maciek.hp -= zombie.hitV2(maciek.startx,maciek.starty)
 
         Run = off()
 

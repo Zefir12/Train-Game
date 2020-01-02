@@ -18,33 +18,54 @@ class Mob():
         self.id = id
         self.size = size/3
         self.speed = 1
-        self.color = [0,99,0]
+        self.sleepColor = [0, 51, 0]
+        self.attackColor = [0, 255, 0]
+        self.triggeredColor = [0, 153, 0]
+        self.color = self.sleepColor
         self.timeToMove = random.randint(60,120)
         self.distance = random.randint(30,60)
         self.direction = random.randint(0,3)
+        self.range = 200
 
     def update(self):
         self.x = self.startx + self.offx*2
         self.y = self.starty + self.offy*2
 
-    def AI(self):
-        if self.timeToMove == 0:
-            if self.distance != 0:
-                if self.direction == 0:
-                    self.startx += 1
-                elif self.direction == 1:
-                    self.starty += 1
-                elif self.direction == 2:
-                    self.startx -= 1
-                else:
-                    self.starty -=1
-                self.distance -= 1
+    def AI(self, x, y):
+        playerPos = abs(x) + abs(y)
+        mobPos = abs(self.startx) + abs(self.starty)
+        if mobPos - playerPos <= self.range:
+            self.timeToMove = random.randint(60,120)
+            self.color = self.attackColor
+            self.range = 300
+            if x > self.startx:
+                self.startx += self.speed
             else:
-                self.distance = random.randint(30,60)
-                self.direction = random.randint(0,3)
-                self.timeToMove = random.randint(60,120)
+                self.startx -= self.speed
+            if y > self.starty:
+                self.starty += self.speed
+            else:
+                self.starty -= self.speed
         else:
-            self.timeToMove -= 1
+            if self.timeToMove == 0:
+                self.range = 200
+                self.color = self.sleepColor
+                if self.distance != 0:
+                    if self.direction == 0:
+                        self.startx += self.speed
+                    elif self.direction == 1:
+                        self.starty += self.speed
+                    elif self.direction == 2:
+                        self.startx -= self.speed
+                    else:
+                        self.starty -=self.speed
+                    self.distance -= 1
+                else:
+                    self.distance = random.randint(30,60)
+                    self.direction = random.randint(0,3)
+                    self.timeToMove = random.randint(60,120)
+            else:
+                self.timeToMove -= 1
 
     def draw(self):
             pygame.draw.circle(obraz, self.color, [int(self.x), int(self.y)], int(self.size))
@@ -72,10 +93,9 @@ class Mob():
                     if self.y - self.offy - self.speed <= b.y + b.size:
                         self.starty -= self.speed
 
-    def hitV2(self,gracz):#,pozycjax, pozycjay, pozycjax2, pozycjay2, rozmiar):
-        if (self.startx + self.size >= gracz.startx) and (self.startx - self.size <= gracz.startx) and (
-                self.starty + self.size >= gracz.starty) and (self.starty - self.size <= gracz.starty):
-            gracz.hp -= self.dmg
-            self.color = [255, 0, 0]
+    def hitV2(self,x,y):
+        if (self.startx + self.size * 2 >= x) and (self.startx - self.size * 2 <= x) and (
+                self.starty + self.size * 2 >= y) and (self.starty - self.size * 2 <= y):
+            return self.dmg
         else:
-            self.color = [0, 255, 0]
+            return 0
