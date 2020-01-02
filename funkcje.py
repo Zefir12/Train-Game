@@ -1,14 +1,15 @@
-from config import *
+from config import Settings
 import pygame
 import sys
 
+Settings = Settings()
 
 pygame.init()
 pygame.font.init()
 clock = pygame.time.Clock()
 czcionka = pygame.font.Font("Czcionki/Montserrat-ExtraBold.otf", 10)
 czcionkaBIG = pygame.font.Font("Czcionki/Montserrat-ExtraBold.otf", 40)
-obraz = pygame.display.set_mode([szerokoscOkna, wysokoscOkna])
+obraz = pygame.display.set_mode([Settings.szerokoscOkna, Settings.wysokoscOkna])
 water = pygame.image.load('water.png')
 
 
@@ -22,12 +23,14 @@ def napisy(co, x, y,rozmiar):
     obraz.blit(label2, [x, y])
 
 
-def przycisk(x,y,sizex,sizey,zmiennax,zmiennay, event):
-    pygame.draw.rect(obraz, [0, 0, 0], [x, y, sizex, sizey])
+def przycisk(x, y, sizex, sizey, zmiennax, zmiennay, event, zmiennatrue=True, zmiennafalse=False, r=0, g=0, b=0, text=None, textsize=1):
+    pygame.draw.rect(obraz, [r, g, b], [x, y, sizex, sizey])
+    if text is not None:
+        napisy(text, x, y, textsize)
     if x < zmiennax < x+sizex and y < zmiennay < y + sizey and event:
-        return False
+        return zmiennatrue
     else:
-        return True
+        return zmiennafalse
 
 def redraw_game(r, g, b):
     pygame.Surface.fill(obraz, [r, g, b])
