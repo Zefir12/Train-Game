@@ -34,17 +34,17 @@ class Mob():
     def AI(self, x, y):
         playerPos = abs(x) + abs(y)
         mobPos = abs(self.startx) + abs(self.starty)
-        if mobPos - playerPos <= self.range:
+        if mobPos - playerPos <= self.range and playerPos - mobPos <= self.range:
             self.timeToMove = random.randint(60,120)
             self.color = self.attackColor
             self.range = 300
             if x > self.startx:
                 self.startx += self.speed
-            else:
+            elif x < self.startx:
                 self.startx -= self.speed
             if y > self.starty:
                 self.starty += self.speed
-            else:
+            elif y < self.starty:
                 self.starty -= self.speed
         else:
             if self.color == self.attackColor:
@@ -71,6 +71,7 @@ class Mob():
 
     def draw(self):
             pygame.draw.circle(obraz, self.color, [int(self.x), int(self.y)], int(self.size))
+            pygame.draw.circle(obraz, [0, 0, 255], [int(self.x), int(self.y)], self.range, 3)
 
     def mapblock(self):
         if self.startx < 0 + self.size:
