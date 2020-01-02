@@ -17,35 +17,38 @@ class Mob():
         self.look = look
         self.id = id
         self.size = size/3
-        self.move = random.randint(20,40)
-        self.direction = random.randint(1,4)
         self.speed = 1
-        self.hardMove = 0
-        self.hardMoveSet = 2
-        self.color = [0,255,0]
+        self.color = [0,99,0]
+        self.timeToMove = random.randint(60,120)
+        self.distance = random.randint(30,60)
+        self.direction = random.randint(0,3)
+
     def update(self):
         self.x = self.startx + self.offx*2
         self.y = self.starty + self.offy*2
+
     def AI(self):
-        self.move += self.hardMove
-        if self.move != 0:
-            if self.direction == 1:
-                self.move -= 1
-                self.startx -= self.speed
-            if self.direction == 2:
-                self.move -= 1
-                self.starty -= self.speed
-            if self.direction == 3:
-                self.move -= 1
-                self.startx += self.speed
-            if self.direction == 4:
-                self.move -= 1
-                self.starty += self.speed
+        if self.timeToMove == 0:
+            if self.distance != 0:
+                if self.direction == 0:
+                    self.startx += 1
+                elif self.direction == 1:
+                    self.starty += 1
+                elif self.direction == 2:
+                    self.startx -= 1
+                else:
+                    self.starty -=1
+                self.distance -= 1
+            else:
+                self.distance = random.randint(30,60)
+                self.direction = random.randint(0,3)
+                self.timeToMove = random.randint(60,120)
         else:
-            self.move = random.randint(20, 100)
-            self.direction = random.randint(1, 4)
+            self.timeToMove -= 1
+
     def draw(self):
             pygame.draw.circle(obraz, self.color, [int(self.x), int(self.y)], int(self.size))
+
     def mapblock(self):
         if self.startx < 0 + self.size:
             self.startx += self.speed
@@ -55,6 +58,7 @@ class Mob():
             self.starty += self.speed
         if self.starty > (self.sizey * self.size*3) - self.size:
             self.starty -= self.speed
+
     def hitboxy(self, listaobiektow, rodzajterenu):
         for b in listaobiektow:
             if b.x - self.size < self.x - self.offx < b.x + b.size + self.size and b.y - self.size < self.y - self.offy < b.y + b.size + self.size:
