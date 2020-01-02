@@ -47,6 +47,8 @@ class Mob():
             else:
                 self.starty -= self.speed
         else:
+            if self.color == self.attackColor:
+                self.color = self.triggeredColor
             if self.timeToMove == 0:
                 self.range = 200
                 self.color = self.sleepColor
