@@ -97,7 +97,6 @@ def main(Run, offpos, map):
         zombie.mapblock()
         zombie.hitboxy(listVisibleBlocks, 0)
         zombie.hitboxy(listVisibleBlocks, 2)
-        zombie.hitboxy(listVisibleBlocks, 4)
         maciek.hp -= zombie.hitV2(maciek.startx,maciek.starty)
 
         Run = off()
