@@ -21,7 +21,7 @@ class Player:
         self.hand = (0, 0)
         self.eq = []
         self.wielkoscEQ = 10
-        for i in range(10):
+        for i in range(self.wielkoscEQ):
             self.eq.append(0)
 
     def move(self):
@@ -43,7 +43,7 @@ class Player:
         self.y = self.starty + self.offy*2
 
     def drawHand(self):
-        pygame.draw.circle(obraz,[255,0,0], [int(self.hand[0]), int(self.hand[1])], int(self.size/3))
+        pygame.draw.circle(obraz, [255, 0, 0], [int(self.hand[0]), int(self.hand[1])], int(self.size/3))
 
     def setHand(self, rodzajchodzenia):
         if self.kierunek == 0:
@@ -55,20 +55,26 @@ class Player:
         if self.kierunek == 3:
             self.hand = (self.x + self.size*rodzajchodzenia, self.y + self.size*rodzajchodzenia + self.size * 2)
 
-    def handWorking(self,listaobiektow):
+    def handWorking(self,listaobiektow, terrain, speed):
         for b in listaobiektow:
-            if b.terrain != 1:
+            if b.terrain != 1 and b.terrain != 5:
                 if b.x < self.hand[0] - offpos[0] < b.x + b.size and b.y < self.hand[1] - offpos[1] < b.y + b.size:
-                    b.znieszczenie += 1
-                    if b.znieszczenie == 120:
+                    if b.destruction > 0:
+                        b.destruction -= speed
+                    if b.destruction < 1:
                         if b.terrain == 2:
                             self.eq[0] += 1
+                            b.terrain = 1
                         if b.terrain == 4:
                             self.eq[1] += 1
-                        b.terrain = 1
-
-
-
+                            b.terrain = 1
+                        if b.terrain == 0:
+                            self.eq[1] += 1
+                            b.terrain = 5
+                            b.caseNeighbours[3] = b.id - wymiaryMapyy
+                            b.caseNeighbours[1] = b.id + wymiaryMapyy
+                            b.caseNeighbours[2] = b.id + 1
+                            b.caseNeighbours[0] = b.id - 1
 
     def terrainblock(self):
         self.leftblock = 1
@@ -100,13 +106,13 @@ class Player:
         for b in listaobiektow:
             if b.x - self.size < self.x - offpos[0] < b.x + b.size + self.size and b.y - self.size < self.y - offpos[1] < b.y + b.size + self.size:
                 if b.terrain == rodzajterenu:
-                    if (self.x - offpos[0] + self.speed >= b.x):
+                    if self.x - offpos[0] + self.speed >= b.x:
                         self.startx += self.speed
-                    if (self.x - offpos[0] - self.speed <= b.x + b.size):
+                    if self.x - offpos[0] - self.speed <= b.x + b.size:
                         self.startx -= self.speed
-                    if (self.y - offpos[1] + self.speed >= b.y):
+                    if self.y - offpos[1] + self.speed >= b.y:
                         self.starty += self.speed
-                    if (self.y - offpos[1] - self.speed <= b.y + b.size):
+                    if self.y - offpos[1] - self.speed <= b.y + b.size:
                         self.starty -= self.speed
 
     def hitboxy2(self, listaobiektow, rodzajterenu):
@@ -174,3 +180,4 @@ class Player:
             pygame.draw.circle(obraz, [0, 0, 0], [int(self.x), int(self.y)], int(self.size))
         else:
             pygame.draw.rect(obraz, self.color, [self.x, self.y, self.size*2, self.size*2])
+            pygame.draw.circle(obraz, [0, 0, 0], [int(self.x+self.size), int(self.y+self.size)], int(self.size))

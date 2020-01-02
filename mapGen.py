@@ -1,5 +1,6 @@
-from config import *
+from funkcje import *
 from case import Case
+from chunk import Chunk
 import pickle
 import random
 
@@ -8,18 +9,10 @@ idCase = 0
 chances = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 
 
-for b in range(wymiaryMapyx):
-    for bb in range(wymiaryMapyy):
-        listaMapy.append(Case(b*size, bb*size, idCase))
-        idCase += 1
-
-
-
-a = random.randint(3,8)
+a = random.randint(3, 8)
 rozmiarmin = 0
 rozmiarmax = 3
 listakregi = [(0, wymiaryMapyy*size), (wymiaryMapyx*size/6*5, wymiaryMapyy * size/2)]
-
 liczbaskal = 3
 rozmiarskalmin = 3
 rozmiarskalmax = 4
@@ -31,27 +24,38 @@ listaskaly = []
 
 
 
+
+for b in range(wymiaryMapyx):
+    for bb in range(wymiaryMapyy):
+        listaMapy.append(Case(b*size, bb*size, idCase))
+        idCase += 1
+print('Stworzylo grid mapy')
+
+
 for b in range(a):
     c = random.randint(0, idCase)
     for bb in listaMapy:
         if bb.id == c:
             listakregi.append((bb.x, bb.y))
+print('Wylosowalo kregi terenu')
 
-#stworzenie duzych wysp
+
 for b in listakregi:
     for bb in listaMapy:
         if (((b[0] - bb.x) ** 2) + ((b[1] - bb.y) ** 2)) < (bb.size * random.randint(rozmiarmax, rozmiarmax)*4)**2:
             bb.terrain = 1
+print('Stworzylo pierwsze polacie terenu')
 
-#dobicie dodatkowych wysepek pomiedzy duzymi wyspami
+
 for b in listakregi:
     for bb in listakregi:
         temp = ((b[0]+bb[0])/2, (b[1]+bb[1])/2)
         for bbb in listaMapy:
             if (((temp[0] - bbb.x) ** 2) + ((temp[1] - bbb.y) ** 2)) < (bbb.size * random.randint(rozmiarmax, rozmiarmax) * 2) ** 2:
                 bbb.terrain = 1
+print('Rozlokowalo dodatkowe wyspy')
 
-#tworzymy lasy
+
 for b in range(liczbaforest):
     while len(listaforest) < liczbaforest:
         c = random.randint(0, idCase)
@@ -59,14 +63,16 @@ for b in range(liczbaforest):
             if bb.id == c:
                 if bb.terrain == 1:
                     listaforest.append((bb.x, bb.y))
+print('Wylosowalo centra lasow')
 
 for b in listaforest:
     for bb in listaMapy:
         if (((b[0] - bb.x) ** 2) + ((b[1] - bb.y) ** 2)) < (bb.size * random.randint(rozmiarforestmin, rozmiarforestmax) * 2) ** 2:
             if bb.terrain != 0:
                 bb.terrain = 4
+print('Rozlokowalo poszczegolne drzewa')
 
-#tworzymy kamyki
+
 for b in range(liczbaskal):
     while len(listaskaly) < liczbaskal:
         c = random.randint(0, idCase)
@@ -74,55 +80,100 @@ for b in range(liczbaskal):
             if bb.id == c:
                 if bb.terrain == 1:
                     listaskaly.append((bb.x, bb.y))
+print('Stworzylo centra kamieni')
 
 for b in listaskaly:
     for bb in listaMapy:
         if (((b[0] - bb.x) ** 2) + ((b[1] - bb.y) ** 2)) < (bb.size * random.randint(rozmiarskalmin, rozmiarskalmax) * 3) ** 2:
             bb.terrain = 2
-
-
-
-
-
+print('Rozlokowalo kamienie')
 
 
 
 #############################################################################################################
-### Tworzenie sąsiadów
+### Creating neighbourhoods
+percent = 0
 for b in listaMapy:
-    print(b.id/idCase)
-    for bb in listaMapy:
-        if b.id - wymiaryMapyy == bb.id and b.terrain != 0:
-            if bb.terrain != 0:
-                b.caseNeighbours[3] = bb.id
-        if b.id + wymiaryMapyy == bb.id and b.terrain != 0:
-            if bb.terrain != 0:
-                b.caseNeighbours[1] = bb.id
-        if b.id + 1 == bb.id and b.terrain != 0:
-            if bb.terrain != 0:
-                b.caseNeighbours[2] = bb.id
-        if b.id - 1 == bb.id and b.terrain != 0:
-            if bb.terrain != 0:
-                b.caseNeighbours[0] = bb.id
+    if percent < round(b.id/idCase * 100):
+        percent = round(b.id/idCase * 100)
+        print(str(percent) + '% wpisywania sasiadow do casow')
 
-for b in listaMapy:
-    if (b.id + 1)%wymiaryMapyy == 0 and b.terrain != 0:
+    if wymiaryMapyy < b.id:
+        if listaMapy[b.id - wymiaryMapyy].terrain != 0:
+            b.caseNeighbours[3] = listaMapy[b.id - wymiaryMapyy].id
+        else:
+            b.caseNeighbours[3] = None
+            if b.terrain !=0:
+                b.shade2 = True
+    if b.id < idCase - wymiaryMapyy:
+        if listaMapy[b.id + wymiaryMapyy].terrain != 0:
+            b.caseNeighbours[1] = listaMapy[b.id + wymiaryMapyy].id
+        else:
+            b.caseNeighbours[1] = None
+            if b.terrain !=0:
+                b.shade4 = True
+    if b.id < idCase - 1:
+        if listaMapy[b.id + 1].terrain != 0:
+            b.caseNeighbours[2] = listaMapy[b.id + 1].id
+        else:
+            b.caseNeighbours[2] = None
+            if b.terrain !=0:
+                b.shade1 = True
+    if b.id > 1:
+        if listaMapy[b.id - 1].terrain != 0:
+            b.caseNeighbours[0] = listaMapy[b.id - 1].id
+        else:
+            b.caseNeighbours[0] = None
+            if b.terrain !=0:
+                b.shade3 = True
+    if wymiaryMapyy > b.id:
+        if listaMapy[b.id].terrain != 0:
+            b.shade2 = True
+    if (b.id + 1) % wymiaryMapyy == 0:
         b.caseNeighbours[2] = None
-    if (b.id)%wymiaryMapyy == 0 and b.terrain != 0:
+        if b.terrain != 0:
+            b.shade1 = True
+    if b.id % wymiaryMapyy == 0:
         b.caseNeighbours[0] = None
-
-for b in listaMapy:
-    if b.caseNeighbours[2] is None and b.terrain != 0:
-        b.shade1 = True
-    if b.caseNeighbours[3] is None and b.terrain != 0:
-        b.shade2 = True
+        if b.terrain != 0:
+            b.shade3 = True
 
 
-for b in listaMapy:
-    if b.terrain != 0:
-        if b.id < wymiaryMapyy:
-            b.shade = True
+###############################################################################################################
+### Creating chunks
+listaCHUNK = []
+chunkID = 0
+
+for b in range(0, int(wymiaryMapyx), 8):
+    for bb in range(0, int(wymiaryMapyy), 8):
+        listaCHUNK.append(Chunk(b * size, bb * size, chunkID))
+        chunkID += 1
+print('Stworzylo chunki')
+
+percent = 0
+for b in listaCHUNK:
+    if percent < round(b.id/chunkID * 100):
+        percent = round(b.id/chunkID * 100)
+        print(str(percent) + '% wpisywania blokow do chunkow')
+
+    for bb in listaMapy:
+        if b.x < bb.x+1 < b.x + size * 8 and b.y < bb.y+1 < b.y + size * 8:
+            b.caselist.append(bb)
 
 
-with open('mapa.txt', 'wb') as obiekt:
-    pickle.dump(listaMapy, obiekt)
+
+print('Wpisalo bloki do odpowiednich chunkow')
+
+
+with open('chunks.txt', 'wb') as obiekt:
+    pickle.dump(listaCHUNK, obiekt)
+
+
+"""
+    for c in range(8):
+        x = (((b.id ) * 64) - c*wymiaryMapyy)-1
+        for cc in range(8):
+            b.caselist.append(listaMapy[x - cc])
+            
+    WAZNE NIE RUSZAC!!
+"""
