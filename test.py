@@ -13,7 +13,7 @@ czcionka = pygame.font.Font("Czcionki/Montserrat-ExtraBold.otf", 10)
 czcionkaBIG = pygame.font.Font("Czcionki/Montserrat-ExtraBold.otf", 40)
 obraz = pygame.display.set_mode([1000, 1000])
 
-rozmiarpiksela = 10
+rozmiarpiksela = 5
 
 def redraw_game(r, g, b):
     pygame.Surface.fill(obraz, [r, g, b])
@@ -35,14 +35,14 @@ class Klocek():
         self.x = x
         self.y = y
         self.value = value
-        self.color = [0,0,0]
+        self.color = [0,0,90]
 
     def rysuj(self):
         pygame.draw.rect(obraz, self.color, [self.x, self.y, rozmiarpiksela, rozmiarpiksela])
 
     def update(self):
-        if self.value > 0.7:
-            self.color = [0,90,0]
+        if self.value > 0.5:
+            self.color = [0, 90, 0]
 
 
 def noise(nx, ny, gen):
@@ -63,9 +63,9 @@ def losowando(frequency, sizex, sizey):
 
 def gene():
     klocki = []
-    wymiarx = 100
-    wymiary = 100
-    value = losowando(8, 100, 100)
+    wymiarx = 200
+    wymiary = 200
+    value = losowando(8, wymiarx, wymiary)
 
     i = 0
     ii = 0
@@ -79,6 +79,8 @@ def gene():
 
 Run = True
 klocki = gene()
+for b in klocki:
+    b.update()
 while Run:
     click = pygame.mouse.get_pressed()
     redraw_game(200, 0, 0)
