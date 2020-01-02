@@ -2,7 +2,7 @@ from funkcje import *
 from case import Case
 from player import Player
 import pickle
-
+from Mobek import Mobek
 
 
 with open('chunks.txt', 'rb') as obiekt:
@@ -10,7 +10,7 @@ with open('chunks.txt', 'rb') as obiekt:
 
 
 maciek = Player(size/2, wymiaryMapyy*size - size/2, 0)
-
+zombie = Mobek(size/2, wymiaryMapyy*size - size/2, 0)
 
 def main(Run, offpos):
     i=0
@@ -82,6 +82,11 @@ def main(Run, offpos):
         maciek.drawHand()
         maciek.terrainblock()
         maciek.handWorking(listVisibleBlocks, 1, 11)
+        ######mobki
+        zombie.offx, zombie.offy = offpos[0], offpos[1]
+        zombie.update()
+        zombie.draw()
+        ######
         if chodzenie == 0:
             maciek.mapblock()
             maciek.htiboxy(listVisibleBlocks, 0)
