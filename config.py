@@ -10,7 +10,7 @@ class Settings:
         self.sztuczne3d = True
         self.showId = False
         self.watereffects = False
-        self.drawChunkBorders = True
+        self.drawChunkBorders = False
         self.cameraspeed = 20
         self.shadowDepth = 5
         self.freecamera = False

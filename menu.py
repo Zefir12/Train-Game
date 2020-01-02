@@ -33,9 +33,9 @@ while True:
     if przycisk(Settings.szerokoscOkna/2 - 100, Settings.wysokoscOkna/3 + 100, 200, 60, mouse[0], mouse[1], click[0], r=100, g=100, b=100, text="settings", textsize=0):
         settingsMenu(RunSettings)
     if przycisk(Settings.szerokoscOkna/2 - 100, Settings.wysokoscOkna/3 + 200, 200, 60, mouse[0], mouse[1], click[0], r=100, g=100, b=100, text="new map", textsize=0):
-        Map1.size = 20
-        Map1.wymiaryMapyx = 100
-        Map1.wymiaryMapyy = 100
+        Map1.size = 35
+        Map1.wymiaryMapyx = 200
+        Map1.wymiaryMapyy = 200
         Map1.chunklist = mapGeneration(Map1.size, Map1.wymiaryMapyx, Map1.wymiaryMapyy)
     if przycisk(Settings.szerokoscOkna/2 - 100, Settings.wysokoscOkna/3 + 300, 200, 60, mouse[0], mouse[1], click[0], r=100, g=100, b=100, text="exit", textsize=0):
         with open('Maps/map1.txt', 'wb') as obiekt:

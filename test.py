@@ -31,18 +31,28 @@ def off():
 
 
 class Klocek():
-    def __init__(self, x, y, value):
+    def __init__(self, x, y, value, value2, value3):
         self.x = x
         self.y = y
         self.value = value
-        self.color = [0,0,90]
+        self.value2 = value2
+        self.value3 = value3
+        self.color = [0, 0, 0]
 
     def rysuj(self):
         pygame.draw.rect(obraz, self.color, [self.x, self.y, rozmiarpiksela, rozmiarpiksela])
 
     def update(self):
-        if self.value > 0.5:
-            self.color = [0, 90, 0]
+        if self.value < 0.3:
+            self.color = [0, 0, self.value * 400,0]
+        else:
+            self.color = [self.value*255,self.value*255,0]
+        if self.value2 > 0.5 and 0.6 > self.value > 0.3 and self.value3 > 0.3:
+            self.color = [0, self.value*150, 0]
+        if self.value > 0.83:
+            self.color = [70, 70,70]
+        if self.value > 0.88:
+            self.color = [200, 200,200]
 
 
 def noise(nx, ny, gen):
@@ -58,20 +68,22 @@ def losowando(frequency, sizex, sizey):
         for x in range(sizey):
             nx = x / sizex - 0.5
             ny = y / sizey - 0.5
-            value[y][x] = noise(frequency * nx * 2, frequency * ny, gen)
+            value[y][x] = noise((frequency * nx)*0.85 + (frequency * nx * 8)*0.15, (frequency * ny)*0.85 + (frequency * ny * 8)*0.15, gen)
     return value
 
 def gene():
     klocki = []
     wymiarx = 200
     wymiary = 200
-    value = losowando(8, wymiarx, wymiary)
+    value = losowando(4, wymiarx, wymiary)
+    value2 = losowando(15, wymiarx, wymiary)
+    value3 = losowando(20, wymiarx, wymiary)
 
     i = 0
     ii = 0
     for b in range(wymiarx):
         for bb in range(wymiary):
-            klocki.append(Klocek(b*rozmiarpiksela, bb*rozmiarpiksela, value[ii][i]))
+            klocki.append(Klocek(b*rozmiarpiksela, bb*rozmiarpiksela, value[ii][i], value2[ii][i], value3[ii][i]))
             i += 1
         ii += 1
         i = 0

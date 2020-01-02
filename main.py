@@ -12,9 +12,8 @@ import pickle
 
 
 def main(Run, offpos, map):
-    i = 0
-    maciek = Player(map.wymiaryMapyx / 2, map.wymiaryMapyy / 2, 0, map.size, map.wymiaryMapyx, map.wymiaryMapyy)
-    zombie = Mob(map.wymiaryMapyx / 2, map.wymiaryMapyy / 2, 0, map.size, map.wymiaryMapyx, map.wymiaryMapyy)
+    maciek = Player((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 0, map.size, map.wymiaryMapyx, map.wymiaryMapyy)
+    zombie = Mob((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 0, map.size, map.wymiaryMapyx, map.wymiaryMapyy)
     while Run:
         listVisibleBlocks = []
         for b in map.chunklist:
@@ -24,10 +23,7 @@ def main(Run, offpos, map):
 
         mouse = pygame.mouse.get_pos()
         clock.tick(60)
-        redraw_game(i, 20, 80)
-        i += 1
-        if i > 250:
-            i = 0
+        redraw_game(0, 80, 80)
 
         if Settings.freecamera:
             offpos[0], offpos[1] = moving(offpos[0], offpos[1], Settings.cameraspeed)
