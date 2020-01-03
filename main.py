@@ -3,7 +3,6 @@ from case import Case
 from player import Player
 from mob import Mob
 import pickle
-from Mobek import Mobek
 
 def main(Run, offpos, map):
     maciek = Player((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 0, map.size, map.wymiaryMapyx, map.wymiaryMapyy)
