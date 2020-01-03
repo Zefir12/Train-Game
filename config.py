@@ -1,16 +1,18 @@
-szerokoscOkna = 1800
-wysokoscOkna = 900
+# Settigns
+class Settings:
+    def __init__(self):
+        self.szerokoscOkna = 1800
+        self.wysokoscOkna = 900
+        self.offpos = [0, 0]
+        self.chodzenie = 0
+        self.drawterrain = True
+        self.szachownica = False
+        self.sztuczne3d = True
+        self.showId = False
+        self.watereffects = False
+        self.drawChunkBorders = False
+        self.cameraspeed = 20
+        self.shadowDepth = 5
+        self.freecamera = False
 
 
-
-
-wymiaryMapyx = 130
-wymiaryMapyy = 40
-size = 50
-offpos = [0, 0]
-chodzenie = 0
-drawterrain = True
-szachownica = False
-sztuczne3d = True
-showId = False
-watereffects = False
