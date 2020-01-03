@@ -8,8 +8,7 @@ import pickle
 
 def main(Run, offpos, map):
     maciek = Player((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 0, map.size, map.wymiaryMapyx, map.wymiaryMapyy)
-    zombie = Mob((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 0, map.size, map.wymiaryMapyx, map.wymiaryMapyy)
-    zombieBig = Mob((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 1, map.size*3, map.wymiaryMapyx, map.wymiaryMapyy,speed=0.5)
+    listZombie = [Mob((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 0, map.size, map.wymiaryMapyx, map.wymiaryMapyy), Mob((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 1, map.size*3, map.wymiaryMapyx, map.wymiaryMapyy, speed=0.5)]
     listITEMS = []
     while Run:
         listVisibleBlocks = []
@@ -96,22 +95,15 @@ def main(Run, offpos, map):
             maciek.hitboxy2(listVisibleBlocks, 4)
         maciek.draw()
 
-        zombie.offx, zombie.offy = offpos[0], offpos[1]
-        zombie.draw()
-        zombie.update()
-        zombie.AI(maciek.startx, maciek.starty)
-        zombie.mapblock()
-        zombie.hitboxy(listVisibleBlocks, 0)
-        zombie.hitboxy(listVisibleBlocks, 2)
-        maciek.hp -= zombie.hitV2(maciek.startx,maciek.starty)
-        zombieBig.offx, zombieBig.offy = offpos[0], offpos[1]
-        zombieBig.draw()
-        zombieBig.update()
-        zombieBig.AI(maciek.startx, maciek.starty)
-        zombieBig.mapblock()
-        zombieBig.hitboxy(listVisibleBlocks, 0)
-        zombieBig.hitboxy(listVisibleBlocks, 2)
-        maciek.hp -= zombieBig.hitV2(maciek.startx,maciek.starty)
+        for b in listZombie:
+            b.offx, b.offy = offpos[0], offpos[1]
+            b.draw()
+            b.update()
+            b.AI(maciek.startx, maciek.starty)
+            b.mapblock()
+            b.hitboxy(listVisibleBlocks, 0)
+            b.hitboxy(listVisibleBlocks, 2)
+            maciek.hp -= b.hitV2(maciek.startx,maciek.starty)
 
 
         maciek.drawInventory()
