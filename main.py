@@ -2,12 +2,13 @@ from funkcje import *
 from case import Case
 from player import Player
 from mob import Mob
+from items import Item
 import pickle
 
 def main(Run, offpos, map):
     maciek = Player((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 0, map.size, map.wymiaryMapyx, map.wymiaryMapyy)
-    zombie = Mob((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 0, map.size, map.wymiaryMapyx, map.wymiaryMapyy)
-    zombieBig = Mob((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 1, map.size*3, map.wymiaryMapyx, map.wymiaryMapyy,speed=0.5)
+    listZombie = [Mob((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 0, map.size, map.wymiaryMapyx, map.wymiaryMapyy), Mob((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 1, map.size*3, map.wymiaryMapyx, map.wymiaryMapyy, speed=0.5)]
+    listITEMS = []
     while Run:
         listVisibleBlocks = []
         for b in map.chunklist:
@@ -16,6 +17,7 @@ def main(Run, offpos, map):
                     listVisibleBlocks.append(bb)
 
         mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
         clock.tick(60)
         redraw_game(0, 80, 80)
 
@@ -44,12 +46,15 @@ def main(Run, offpos, map):
         for b in listVisibleBlocks:
             if Settings.drawterrain:
                 b.drawTerrain()
+                b.drawItems()
+
             if Settings.szachownica:
                 b.drawCase()
 
         for b in listVisibleBlocks:
             if Settings.showId:
                 b.drawId()
+
             if b.x < mouse[0] - offpos[0] < b.x + b.size and b.y < mouse[1] - offpos[1] < b.y + b.size:
                 b.drawHighlight(0, 40, 100, (Settings.szerokoscOkna/2 - (b.x + offpos[0]))/Settings.shadowDepth,  (Settings.wysokoscOkna/2-(b.y + offpos[1]))/Settings.shadowDepth, 2)
                 napisy(b.caseNeighbours, 0, 0, 0)
@@ -65,6 +70,8 @@ def main(Run, offpos, map):
             for b in map.chunklist:
                 pygame.draw.rect(obraz, [200, 0, 0], [b.x + offpos[0]*2, b.y + offpos[1]*2, map.size*8, map.size*8], 2)
 
+        for b in listITEMS:
+            b.draw()
 
         maciek.offx, maciek.offy = offpos[0], offpos[1]
         maciek.move()
@@ -72,7 +79,9 @@ def main(Run, offpos, map):
         maciek.setHand(Settings.chodzenie)
         maciek.drawHand()
         maciek.terrainblock()
-        maciek.handWorking(listVisibleBlocks, 1, 11)
+        maciek.handWorking(listVisibleBlocks)
+        maciek.handPicking(listVisibleBlocks)
+
         if Settings.chodzenie == 0:
             maciek.mapblock()
             maciek.htiboxy(listVisibleBlocks, 0)
@@ -84,23 +93,19 @@ def main(Run, offpos, map):
             maciek.hitboxy2(listVisibleBlocks, 2)
             maciek.hitboxy2(listVisibleBlocks, 4)
         maciek.draw()
-        zombie.offx, zombie.offy = offpos[0], offpos[1]
-        zombie.draw()
-        zombie.update()
-        zombie.AI(maciek.startx, maciek.starty)
-        zombie.mapblock()
-        zombie.hitboxy(listVisibleBlocks, 0)
-        zombie.hitboxy(listVisibleBlocks, 2)
-        maciek.hp -= zombie.hitV2(maciek.startx,maciek.starty)
-        zombieBig.offx, zombieBig.offy = offpos[0], offpos[1]
-        zombieBig.draw()
-        zombieBig.update()
-        zombieBig.AI(maciek.startx, maciek.starty)
-        zombieBig.mapblock()
-        zombieBig.hitboxy(listVisibleBlocks, 0)
-        zombieBig.hitboxy(listVisibleBlocks, 2)
-        maciek.hp -= zombieBig.hitV2(maciek.startx,maciek.starty)
 
+        for b in listZombie:
+            b.offx, b.offy = offpos[0], offpos[1]
+            b.draw()
+            b.update()
+            b.AI(maciek.startx, maciek.starty)
+            b.mapblock()
+            b.hitboxy(listVisibleBlocks, 0)
+            b.hitboxy(listVisibleBlocks, 2)
+            maciek.hp -= b.hitV2(maciek.startx,maciek.starty)
+
+
+        maciek.drawInventory()
         Run = off()
 
 
