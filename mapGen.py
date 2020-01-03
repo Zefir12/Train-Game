@@ -1,6 +1,7 @@
 from funkcje import *
 from case import Case
 from chunk import Chunk
+from items import Item
 import random
 from opensimplex import OpenSimplex
 
@@ -34,6 +35,7 @@ def mapGeneration(size,sizex,sizey):
     value33 = losowando(9, sizex, sizey)
     valuerocks = losowando(5.2, sizex, sizey)
     valuerocks2 = losowando(20.3, sizex, sizey)
+    valuesticks = losowando(50, sizex, sizey)
     i = 0
     ii = 0
     for b in range(sizex):
@@ -47,6 +49,10 @@ def mapGeneration(size,sizex,sizey):
                 listaMapy[len(listaMapy)-1].terrain = 2
             if sizex / 2 < ii < sizex / 3 and sizey / 2 < ii < sizey / 3 and listaMapy[len(listaMapy)-1].terrain == 1:
                 pass
+            if valuesticks[ii][i] > 0.88 and listaMapy[len(listaMapy)-1].terrain == 1:
+                listaMapy[len(listaMapy) - 1].item = Item(1)
+            if valuesticks[ii][i] < 0.096 and listaMapy[len(listaMapy)-1].terrain == 1:
+                listaMapy[len(listaMapy) - 1].item = Item(2)
             idCase += 1
             i += 1
         ii += 1
