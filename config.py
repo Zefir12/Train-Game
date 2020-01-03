@@ -13,6 +13,6 @@ class Settings:
         self.drawChunkBorders = False
         self.cameraspeed = 20
         self.shadowDepth = 5
-        self.freecamera = False
+        self.freecamera = True
 
 

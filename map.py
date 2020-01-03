@@ -8,3 +8,4 @@ class Map:
         self.wymiaryMapyx = sizex
         self.wymiaryMapyy = sizey
         self.chunklist = []
+        self.zombielist = []

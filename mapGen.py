@@ -2,6 +2,7 @@ from funkcje import *
 from case import Case
 from chunk import Chunk
 from items import Item
+from mob import Mob
 import random
 from opensimplex import OpenSimplex
 
@@ -26,6 +27,7 @@ def losowando(frequency, sizex, sizey):
 
 def mapGeneration(size,sizex,sizey):
     listaMapy = []
+    listaZmobie = []
     idCase = 0
 
 
@@ -51,8 +53,13 @@ def mapGeneration(size,sizex,sizey):
                 pass
             if valuesticks[ii][i] > 0.88 and listaMapy[len(listaMapy)-1].terrain == 1:
                 listaMapy[len(listaMapy) - 1].item = Item(1)
-            if valuesticks[ii][i] < 0.096 and listaMapy[len(listaMapy)-1].terrain == 1:
+            if valuesticks[ii][i] < 0.1 and listaMapy[len(listaMapy)-1].terrain == 1:
                 listaMapy[len(listaMapy) - 1].item = Item(2)
+            if 0.595 < valuesticks[ii][i] < 0.6 and listaMapy[len(listaMapy)-1].terrain == 1:
+                if random.randint(0, 6) > 0:
+                    listaZmobie.append(Mob(b*size + size/2, bb*size + size/2, 0, size, sizex, sizey))
+                else:
+                    listaZmobie.append(Mob(b * size + size/2, bb * size + size/2,  1, size*3, sizex, sizey, speed=0.5))
             idCase += 1
             i += 1
         ii += 1
@@ -138,7 +145,7 @@ def mapGeneration(size,sizex,sizey):
 
 
     print('Wpisalo bloki do odpowiednich chunkow')
-    return listaCHUNK
+    return listaCHUNK, listaZmobie
 
 
 

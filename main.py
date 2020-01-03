@@ -7,14 +7,22 @@ import pickle
 
 def main(Run, offpos, map):
     maciek = Player((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 0, map.size, map.wymiaryMapyx, map.wymiaryMapyy)
-    listZombie = [Mob((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 0, map.size, map.wymiaryMapyx, map.wymiaryMapyy), Mob((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 1, map.size*3, map.wymiaryMapyx, map.wymiaryMapyy, speed=0.5)]
-    listITEMS = []
+    i = 30
     while Run:
-        listVisibleBlocks = []
-        for b in map.chunklist:
-            if 0 - map.size * 8 < b.x + offpos[0] * 2 < Settings.szerokoscOkna + map.size and 0 - map.size * 9 < b.y + offpos[1] * 2 < Settings.wysokoscOkna + map.size:
-                for bb in b.caselist:
-                    listVisibleBlocks.append(bb)
+        i += 1
+        if i > 28:
+            i = 0
+            listVisibleBlocks = []
+            for b in map.chunklist:
+                if 0 - map.size * 8 < b.x + offpos[0] * 2 < Settings.szerokoscOkna + map.size and 0 - map.size * 9 < b.y + offpos[1] * 2 < Settings.wysokoscOkna + map.size:
+                    for bb in b.caselist:
+                        listVisibleBlocks.append(bb)
+
+            listVisibleZombies = []
+            for b in map.zombielist:
+                if 0 - map.size * 8 < b.startx + offpos[0] * 2 < Settings.szerokoscOkna + map.size and 0 - map.size * 9 < b.starty + offpos[1] * 2 < Settings.wysokoscOkna + map.size:
+                    listVisibleZombies.append(b)
+
 
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
@@ -38,8 +46,6 @@ def main(Run, offpos, map):
         for b in listVisibleBlocks:
             b.offx, b.offy = offpos[0], offpos[1]
             b.update()
-
-        for b in listVisibleBlocks:
             if Settings.sztuczne3d:
                 b.xd3d((Settings.szerokoscOkna/2 - (b.x + offpos[0]))/Settings.shadowDepth, (Settings.wysokoscOkna/2-(b.y + offpos[1]))/Settings.shadowDepth)
 
@@ -70,8 +76,6 @@ def main(Run, offpos, map):
             for b in map.chunklist:
                 pygame.draw.rect(obraz, [200, 0, 0], [b.x + offpos[0]*2, b.y + offpos[1]*2, map.size*8, map.size*8], 2)
 
-        for b in listITEMS:
-            b.draw()
 
         maciek.offx, maciek.offy = offpos[0], offpos[1]
         maciek.move()
@@ -94,7 +98,7 @@ def main(Run, offpos, map):
             maciek.hitboxy2(listVisibleBlocks, 4)
         maciek.draw()
 
-        for b in listZombie:
+        for b in listVisibleZombies:
             b.offx, b.offy = offpos[0], offpos[1]
             b.draw()
             b.update()
@@ -102,7 +106,7 @@ def main(Run, offpos, map):
             b.mapblock()
             b.hitboxy(listVisibleBlocks, 0)
             b.hitboxy(listVisibleBlocks, 2)
-            maciek.hp -= b.hitV2(maciek.startx,maciek.starty)
+            maciek.hp -= b.hitV2(maciek.startx, maciek.starty)
 
 
         maciek.drawInventory()
