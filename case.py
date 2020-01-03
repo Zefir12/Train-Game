@@ -1,4 +1,5 @@
 from funkcje import *
+from items import Item
 
 class Case:
     def __init__(self, x, y, id, size):
@@ -26,12 +27,15 @@ class Case:
         self.chunk = None
         self.durability = 5
         self.destruction = 100
-
-
+        self.item = None
 
     def update(self):
         self.x = self.startx + self.offx
         self.y = self.starty + self.offy
+        if self.destruction < 1:
+            if self.terrain == 4:
+                self.terrain = 1
+                self.item = Item(3)
 
     def drawHighlight(self, r, g, b, x, y, thickness):
         pygame.draw.rect(obraz, [r, g, b], [self.x + self.offx, self.y + self.offy, self.size, self.size], thickness)
@@ -83,6 +87,11 @@ class Case:
             pygame.draw.rect(obraz, self.colorbrown, [self.x + self.offx, self.y+self.offy, self.size, self.size])
         if Settings.watereffects:
             obraz.blit(water, [self.x + self.offx, self.y+self.offy, self.size, self.size])
+
+    def drawItems(self):
+        if self.item is not None:
+            pygame.draw.rect(obraz, self.item.color, [self.x + self.offx + self.size/4, self.y + self.offy + self.size/4, self.size/2, self.size/2])
+
 
     def drawCase(self):
         if self.terrain != 0:
