@@ -1,4 +1,5 @@
 from funkcje import *
+import random
 
 
 class Player:
@@ -22,11 +23,12 @@ class Player:
         self.downblock = 1
         self.kierunek = 0
         self.hand = (0, 0)
-        self.eq = []
-        self.wielkoscEQ = 10
+        self.destroyspeed = 12
+        self.sticks = 0
+        self.stones = 0
+        self.wood = 0
         self.hp = 100
-        for i in range(self.wielkoscEQ):
-            self.eq.append(0)
+
 
     def move(self):
         if pygame.key.get_pressed()[pygame.K_a]:
@@ -59,26 +61,32 @@ class Player:
         if self.kierunek == 3:
             self.hand = (self.x + self.size*rodzajchodzenia, self.y + self.size*rodzajchodzenia + self.size * 2)
 
-    def handWorking(self,listaobiektow, terrain, speed):
+    def handWorking(self,listaobiektow):
         for b in listaobiektow:
-            if b.terrain != 1 and b.terrain != 5:
+            if b.terrain == 4 and pygame.key.get_pressed()[pygame.K_SPACE]:
                 if b.x < self.hand[0] - Settings.offpos[0] < b.x + b.size and b.y < self.hand[1] - Settings.offpos[1] < b.y + b.size:
                     if b.destruction > 0:
-                        b.destruction -= speed
-                    if b.destruction < 1:
-                        if b.terrain == 2:
-                            self.eq[0] += 1
-                            b.terrain = 1
-                        if b.terrain == 4:
-                            self.eq[1] += 1
-                            b.terrain = 1
-                        if b.terrain == 0:
-                            self.eq[1] += 1
-                            b.terrain = 5
-                            b.caseNeighbours[3] = b.id - self.sizey
-                            b.caseNeighbours[1] = b.id + self.sizey
-                            b.caseNeighbours[2] = b.id + 1
-                            b.caseNeighbours[0] = b.id - 1
+                        b.destruction -= self.destroyspeed
+
+
+    def handPicking(self, listaobiektow):
+        for b in listaobiektow:
+            if b.x < self.hand[0] - Settings.offpos[0] < b.x + b.size and b.y < self.hand[1] - Settings.offpos[1] < b.y + b.size:
+                if b.item is not None:
+                    if b.item.id == 1:
+                        self.sticks += 1
+                    if b.item.id == 2:
+                        self.stones += 1
+                    if b.item.id == 3:
+                        self.wood += random.randint(2,5)
+                    b.item = None
+
+    def drawInventory(self):
+        pygame.draw.rect(obraz, [90, 90, 90], [0, Settings.wysokoscOkna - 90, 200, 90])
+        napisy('Sticks: '+str(self.sticks), 0, Settings.wysokoscOkna - 90, 1)
+        napisy('Stones: '+str(self.stones), 0, Settings.wysokoscOkna - 80, 1)
+        napisy('Wood:   ' + str(self.wood), 0, Settings.wysokoscOkna - 70, 1)
+
 
     def terrainblock(self):
         self.leftblock = 1
