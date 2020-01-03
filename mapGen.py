@@ -1,172 +1,140 @@
 from funkcje import *
 from case import Case
 from chunk import Chunk
-import pickle
 import random
-
-listaMapy = []
-idCase = 0
-chances = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-
-
-a = random.randint(3, 8)
-rozmiarmin = 0
-rozmiarmax = 3
-listakregi = [(0, wymiaryMapyy*size), (wymiaryMapyx*size/6*5, wymiaryMapyy * size/2)]
-liczbaskal = 3
-rozmiarskalmin = 3
-rozmiarskalmax = 4
-liczbaforest = 8
-rozmiarforestmin = 1
-rozmiarforestmax = 5
-listaforest = []
-listaskaly = []
+from opensimplex import OpenSimplex
 
 
 
 
-for b in range(wymiaryMapyx):
-    for bb in range(wymiaryMapyy):
-        listaMapy.append(Case(b*size, bb*size, idCase))
-        idCase += 1
-print('Stworzylo grid mapy')
+def noise(nx, ny, gen):
+    # Rescale from -1.0:+1.0 to 0.0:1.0
+    return gen.noise2d(nx, ny) / 2.0 + 0.5
 
 
-for b in range(a):
-    c = random.randint(0, idCase)
-    for bb in listaMapy:
-        if bb.id == c:
-            listakregi.append((bb.x, bb.y))
-print('Wylosowalo kregi terenu')
+def losowando(frequency, sizex, sizey):
+    value = []
+    gen = OpenSimplex(seed=random.randint(0, 100))
+    for y in range(sizex):
+        value.append([0] * sizey)
+        for x in range(sizey):
+            nx = x / sizex - 0.5
+            ny = y / sizey - 0.5
+            value[y][x] = noise(frequency * nx * 2, frequency * ny, gen)
+    return value
+
+def mapGeneration(size,sizex,sizey):
+    listaMapy = []
+    idCase = 0
 
 
-for b in listakregi:
-    for bb in listaMapy:
-        if (((b[0] - bb.x) ** 2) + ((b[1] - bb.y) ** 2)) < (bb.size * random.randint(rozmiarmax, rozmiarmax)*4)**2:
-            bb.terrain = 1
-print('Stworzylo pierwsze polacie terenu')
-
-
-for b in listakregi:
-    for bb in listakregi:
-        temp = ((b[0]+bb[0])/2, (b[1]+bb[1])/2)
-        for bbb in listaMapy:
-            if (((temp[0] - bbb.x) ** 2) + ((temp[1] - bbb.y) ** 2)) < (bbb.size * random.randint(rozmiarmax, rozmiarmax) * 2) ** 2:
-                bbb.terrain = 1
-print('Rozlokowalo dodatkowe wyspy')
-
-
-for b in range(liczbaforest):
-    while len(listaforest) < liczbaforest:
-        c = random.randint(0, idCase)
-        for bb in listaMapy:
-            if bb.id == c:
-                if bb.terrain == 1:
-                    listaforest.append((bb.x, bb.y))
-print('Wylosowalo centra lasow')
-
-for b in listaforest:
-    for bb in listaMapy:
-        if (((b[0] - bb.x) ** 2) + ((b[1] - bb.y) ** 2)) < (bb.size * random.randint(rozmiarforestmin, rozmiarforestmax) * 2) ** 2:
-            if bb.terrain != 0:
-                bb.terrain = 4
-print('Rozlokowalo poszczegolne drzewa')
-
-
-for b in range(liczbaskal):
-    while len(listaskaly) < liczbaskal:
-        c = random.randint(0, idCase)
-        for bb in listaMapy:
-            if bb.id == c:
-                if bb.terrain == 1:
-                    listaskaly.append((bb.x, bb.y))
-print('Stworzylo centra kamieni')
-
-for b in listaskaly:
-    for bb in listaMapy:
-        if (((b[0] - bb.x) ** 2) + ((b[1] - bb.y) ** 2)) < (bb.size * random.randint(rozmiarskalmin, rozmiarskalmax) * 3) ** 2:
-            bb.terrain = 2
-print('Rozlokowalo kamienie')
+    value = losowando(8, sizex, sizey)
+    value2 = losowando(16, sizex, sizey)
+    value3 = losowando(9, sizex, sizey)
+    value33 = losowando(9, sizex, sizey)
+    valuerocks = losowando(5.2, sizex, sizey)
+    valuerocks2 = losowando(20.3, sizex, sizey)
+    i = 0
+    ii = 0
+    for b in range(sizex):
+        for bb in range(sizey):
+            listaMapy.append(Case(b*size, bb*size, idCase, size))
+            if value[ii][i] > 0.4:
+                listaMapy[len(listaMapy)-1].terrain = 1
+            if value2[ii][i] > 0.4 and value[ii][i] > 0.4 and value3[ii][i] > 0.6 and value33[ii][i] > 0.2:
+                listaMapy[len(listaMapy)-1].terrain = 4
+            if value[ii][i] > 0.4 and valuerocks[ii][i] > 0.7 and valuerocks2[ii][i] > 0.2:
+                listaMapy[len(listaMapy)-1].terrain = 2
+            if sizex / 2 < ii < sizex / 3 and sizey / 2 < ii < sizey / 3 and listaMapy[len(listaMapy)-1].terrain == 1:
+                pass
+            idCase += 1
+            i += 1
+        ii += 1
+        i = 0
+    print('Stworzylo teren')
 
 
 
-#############################################################################################################
-### Creating neighbourhoods
-percent = 0
-for b in listaMapy:
-    if percent < round(b.id/idCase * 100):
-        percent = round(b.id/idCase * 100)
-        print(str(percent) + '% wpisywania sasiadow do casow')
 
-    if wymiaryMapyy < b.id:
-        if listaMapy[b.id - wymiaryMapyy].terrain != 0:
-            b.caseNeighbours[3] = listaMapy[b.id - wymiaryMapyy].id
-        else:
-            b.caseNeighbours[3] = None
-            if b.terrain !=0:
+
+
+
+    #############################################################################################################
+    ### Creating neighbourhoods
+    percent = 0
+    for b in listaMapy:
+        if percent < round(b.id/idCase * 100):
+            percent = round(b.id/idCase * 100)
+            print(str(percent) + '% wpisywania sasiadow do casow')
+
+        if sizey < b.id:
+            if listaMapy[b.id - sizey].terrain != 0:
+                b.caseNeighbours[3] = listaMapy[b.id - sizey].id
+            else:
+                b.caseNeighbours[3] = None
+                if b.terrain !=0:
+                    b.shade2 = True
+        if b.id < idCase - sizey:
+            if listaMapy[b.id + sizey].terrain != 0:
+                b.caseNeighbours[1] = listaMapy[b.id + sizey].id
+            else:
+                b.caseNeighbours[1] = None
+                if b.terrain != 0:
+                    b.shade4 = True
+        if b.id < idCase - 1:
+            if listaMapy[b.id + 1].terrain != 0:
+                b.caseNeighbours[2] = listaMapy[b.id + 1].id
+            else:
+                b.caseNeighbours[2] = None
+                if b.terrain != 0:
+                    b.shade1 = True
+        if b.id > 1:
+            if listaMapy[b.id - 1].terrain != 0:
+                b.caseNeighbours[0] = listaMapy[b.id - 1].id
+            else:
+                b.caseNeighbours[0] = None
+                if b.terrain !=0:
+                    b.shade3 = True
+        if sizey > b.id:
+            if listaMapy[b.id].terrain != 0:
                 b.shade2 = True
-    if b.id < idCase - wymiaryMapyy:
-        if listaMapy[b.id + wymiaryMapyy].terrain != 0:
-            b.caseNeighbours[1] = listaMapy[b.id + wymiaryMapyy].id
-        else:
-            b.caseNeighbours[1] = None
-            if b.terrain !=0:
-                b.shade4 = True
-    if b.id < idCase - 1:
-        if listaMapy[b.id + 1].terrain != 0:
-            b.caseNeighbours[2] = listaMapy[b.id + 1].id
-        else:
+        if (b.id + 1) % sizey == 0:
             b.caseNeighbours[2] = None
-            if b.terrain !=0:
+            if b.terrain != 0:
                 b.shade1 = True
-    if b.id > 1:
-        if listaMapy[b.id - 1].terrain != 0:
-            b.caseNeighbours[0] = listaMapy[b.id - 1].id
-        else:
+        if b.id % sizey == 0:
             b.caseNeighbours[0] = None
-            if b.terrain !=0:
+            if b.terrain != 0:
                 b.shade3 = True
-    if wymiaryMapyy > b.id:
-        if listaMapy[b.id].terrain != 0:
-            b.shade2 = True
-    if (b.id + 1) % wymiaryMapyy == 0:
-        b.caseNeighbours[2] = None
-        if b.terrain != 0:
-            b.shade1 = True
-    if b.id % wymiaryMapyy == 0:
-        b.caseNeighbours[0] = None
-        if b.terrain != 0:
-            b.shade3 = True
 
 
-###############################################################################################################
-### Creating chunks
-listaCHUNK = []
-chunkID = 0
+    ###############################################################################################################
+    ### Creating chunks
+    listaCHUNK = []
+    chunkID = 0
 
-for b in range(0, int(wymiaryMapyx), 8):
-    for bb in range(0, int(wymiaryMapyy), 8):
-        listaCHUNK.append(Chunk(b * size, bb * size, chunkID))
-        chunkID += 1
-print('Stworzylo chunki')
+    for b in range(0, int(sizex), 8):
+        for bb in range(0, int(sizey), 8):
+            listaCHUNK.append(Chunk(b * size, bb * size, chunkID))
+            chunkID += 1
+    print('Stworzylo chunki')
 
-percent = 0
-for b in listaCHUNK:
-    if percent < round(b.id/chunkID * 100):
-        percent = round(b.id/chunkID * 100)
-        print(str(percent) + '% wpisywania blokow do chunkow')
+    percent = 0
+    for b in listaCHUNK:
+        if percent < round(b.id/chunkID * 100):
+            percent = round(b.id/chunkID * 100)
+            print(str(percent) + '% wpisywania blokow do chunkow')
 
-    for bb in listaMapy:
-        if b.x < bb.x+1 < b.x + size * 8 and b.y < bb.y+1 < b.y + size * 8:
-            b.caselist.append(bb)
+        for bb in listaMapy:
+            if b.x < bb.x+1 < b.x + size * 8 and b.y < bb.y+1 < b.y + size * 8:
+                b.caselist.append(bb)
 
 
 
-print('Wpisalo bloki do odpowiednich chunkow')
+    print('Wpisalo bloki do odpowiednich chunkow')
+    return listaCHUNK
 
 
-with open('chunks.txt', 'wb') as obiekt:
-    pickle.dump(listaCHUNK, obiekt)
 
 
 """
@@ -177,3 +145,4 @@ with open('chunks.txt', 'wb') as obiekt:
             
     WAZNE NIE RUSZAC!!
 """
+
