@@ -14,6 +14,7 @@ import pickle
 def main(Run, offpos, map):
     maciek = Player((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 0, map.size, map.wymiaryMapyx, map.wymiaryMapyy)
     zombie = Mob((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 0, map.size, map.wymiaryMapyx, map.wymiaryMapyy)
+    zombieBig = Mob((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 1, map.size*3, map.wymiaryMapyx, map.wymiaryMapyy,speed=0.5)
     while Run:
         listVisibleBlocks = []
         for b in map.chunklist:
@@ -98,6 +99,14 @@ def main(Run, offpos, map):
         zombie.hitboxy(listVisibleBlocks, 0)
         zombie.hitboxy(listVisibleBlocks, 2)
         maciek.hp -= zombie.hitV2(maciek.startx,maciek.starty)
+        zombieBig.offx, zombieBig.offy = offpos[0], offpos[1]
+        zombieBig.draw()
+        zombieBig.update()
+        zombieBig.AI(maciek.startx, maciek.starty)
+        zombieBig.mapblock()
+        zombieBig.hitboxy(listVisibleBlocks, 0)
+        zombieBig.hitboxy(listVisibleBlocks, 2)
+        maciek.hp -= zombieBig.hitV2(maciek.startx,maciek.starty)
 
         Run = off()
 

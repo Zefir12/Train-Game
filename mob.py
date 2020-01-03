@@ -2,7 +2,7 @@ from funkcje import *
 import random
 
 class Mob():
-    def __init__(self, x, y, id, size, sizex, sizey,speed=0,dmg=1,hp=100,look=0):
+    def __init__(self, x, y, id, size, sizex, sizey,speed=1,dmg=1,hp=100,look=0):
         self.x = x
         self.y = y
         self.sizex = sizex
@@ -11,13 +11,12 @@ class Mob():
         self.starty = self.y
         self.offx = 0
         self.offy = 0
-        self.speed = speed
         self.dmg = dmg
         self.hp = hp
         self.look = look
         self.id = id
         self.size = size/3
-        self.speed = 1
+        self.speed = speed
         self.sleepColor = [0, 51, 0]
         self.attackColor = [0, 255, 0]
         self.triggeredColor = [0, 153, 0]
