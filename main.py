@@ -3,12 +3,13 @@ from case import Case
 from player import Player
 from mob import Mob
 import pickle
+from Mobek import Mobek
 
 
 
 
-
-
+maciek = Player(size/2, wymiaryMapyy*size - size/2, 0)
+zombie = Mobek(size/2 + 20, wymiaryMapyy*size - size/2-20, 0)
 
 
 def main(Run, offpos, map):
