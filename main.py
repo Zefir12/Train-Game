@@ -5,13 +5,6 @@ from mob import Mob
 import pickle
 from Mobek import Mobek
 
-
-
-
-maciek = Player(size/2, wymiaryMapyy*size - size/2, 0)
-zombie = Mobek(size/2 + 20, wymiaryMapyy*size - size/2-20, 0)
-
-
 def main(Run, offpos, map):
     maciek = Player((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 0, map.size, map.wymiaryMapyx, map.wymiaryMapyy)
     zombie = Mob((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 0, map.size, map.wymiaryMapyx, map.wymiaryMapyy)
