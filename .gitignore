@@ -3,4 +3,5 @@ mapa.txt
 chunks.txt
 .idea
 test.py
-Maps
+__pycache__
+

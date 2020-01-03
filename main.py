@@ -12,7 +12,7 @@ import pickle
 def main(Run, offpos, map):
     maciek = Player((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 0, map.size, map.wymiaryMapyx, map.wymiaryMapyy)
     zombie = Mob((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 0, map.size, map.wymiaryMapyx, map.wymiaryMapyy)
-    zombieBig = Mob((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 1, map.size*3, map.wymiaryMapyx, map.wymiaryMapyy,speed=0.5)
+    zombieBig = Mob((map.wymiaryMapyx / 2)*map.size, (map.wymiaryMapyy / 2)*map.size, 1, map.size*3, map.wymiaryMapyx, map.wymiaryMapyy, speed=0.5)
     listITEMS = []
     while Run:
         listVisibleBlocks = []
@@ -114,7 +114,7 @@ def main(Run, offpos, map):
         zombieBig.mapblock()
         zombieBig.hitboxy(listVisibleBlocks, 0)
         zombieBig.hitboxy(listVisibleBlocks, 2)
-        maciek.hp -= zombieBig.hitV2(maciek.startx,maciek.starty)
+        maciek.hp -= zombieBig.hitV2(maciek.startx, maciek.starty)
 
 
         maciek.drawInventory()
