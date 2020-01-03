@@ -1,7 +1,7 @@
 from funkcje import *
 
 class Case:
-    def __init__(self, x, y, id):
+    def __init__(self, x, y, id, size):
         self.x = x
         self.y = y
         self.id = id
@@ -45,7 +45,7 @@ class Case:
         if self.shade2:
             if x < 0:
                 pygame.draw.polygon(obraz, [r, g, b], [(self.x + self.offx + x, self.y + self.offy + y),
-                                                             (self.x + self.offx + x, self.y + self.offy + y + size),
+                                                             (self.x + self.offx + x, self.y + self.offy + y + self.size),
                                                              (self.x + self.offx, self.y + self.offy + self.size),
                                                              (self.x + self.offx, self.y + self.offy)], thickness)
         if self.shade3:
@@ -62,7 +62,7 @@ class Case:
                 pygame.draw.polygon(obraz, [70, 70, 70], [(self.x + self.offx, self.y + self.offy + self.size), (self.x+self.offx + x, self.y + self.offy + y + self.size), (self.x + self.offx + x + self.size,self.y + self.offy + y+self.size), (self.x + self.offx + self.size, self.y+self.offy+self.size)])
         if self.shade2:
             if x < 0:
-                pygame.draw.polygon(obraz, [130, 130, 130], [(self.x + self.offx + x, self.y + self.offy + y), (self.x+self.offx + x, self.y + self.offy + y + size), (self.x + self.offx, self.y + self.offy + self.size), (self.x + self.offx, self.y+self.offy)])
+                pygame.draw.polygon(obraz, [130, 130, 130], [(self.x + self.offx + x, self.y + self.offy + y), (self.x+self.offx + x, self.y + self.offy + y + self.size), (self.x + self.offx, self.y + self.offy + self.size), (self.x + self.offx, self.y+self.offy)])
         if self.shade4:
             if x > 0:
                 pygame.draw.polygon(obraz, [20, 20, 20], [(self.x + self.offx + self.size, self.y + self.offy + self.size), (self.x + self.offx + self.size + x, self.y + self.offy + self.size + y), (self.x + self.offx + self.size + x, self.y+self.offy + y), (self.x + self.offx + self.size, self.y + self.offy)])
@@ -81,7 +81,7 @@ class Case:
             pygame.draw.rect(obraz, self.colordarkgreen, [self.x + self.offx, self.y+self.offy, self.size, self.size])
         elif self.terrain == 5:
             pygame.draw.rect(obraz, self.colorbrown, [self.x + self.offx, self.y+self.offy, self.size, self.size])
-        if watereffects:
+        if Settings.watereffects:
             obraz.blit(water, [self.x + self.offx, self.y+self.offy, self.size, self.size])
 
     def drawCase(self):
@@ -93,4 +93,4 @@ class Case:
             pygame.draw.rect(obraz, [200-self.destruction, 0, 0], [self.x + self.offx, self.y + self.offy, self.size, self.size], int((100 - self.destruction)/10))
 
     def drawId(self):
-        napisy(self.id, self.x + offpos[0] + self.size/2, self.y + offpos[1] + self.size/2, 1)
+        napisy(self.id, self.x + Settings.offpos[0] + self.size/2, self.y + Settings.offpos[1] + self.size/2, 1)
