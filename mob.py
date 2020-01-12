@@ -68,8 +68,8 @@ class Mob():
             else:
                 self.timeToMove -= 1
 
-    def draw(self):
-            pygame.draw.circle(obraz, self.color, [int(self.x), int(self.y)], int(self.size))
+    def draw(self, coloroffset):
+            pygame.draw.circle(obraz, [self.color[0] + int(self.color[0] * coloroffset[0]), self.color[1] + int(self.color[1] * coloroffset[1]), self.color[2] + int(self.color[2] * coloroffset[2])], [int(self.x), int(self.y)], int(self.size))
 
     def mapblock(self):
         if self.startx < 0 + self.size:

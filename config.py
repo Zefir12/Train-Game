@@ -9,10 +9,12 @@ class Settings:
         self.szachownica = False
         self.sztuczne3d = True
         self.showId = False
+        self.showidNeighbours = False
         self.watereffects = False
         self.drawChunkBorders = False
         self.cameraspeed = 20
-        self.shadowDepth = 5
-        self.freecamera = True
+        self.shadowDepth = 9
+        self.freecamera = False
+        self.timespeed = 0.004
 
 

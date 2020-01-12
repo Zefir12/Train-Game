@@ -56,3 +56,26 @@ def moving(x, y, speed):
     if pygame.key.get_pressed()[pygame.K_DOWN]:
         y -= speed
     return x, y
+
+def timefunction(timeoftheday, timezmienna, speed):
+    if timezmienna == 0:
+        if timeoftheday < 0:
+            timeoftheday += speed
+        else:
+            timezmienna = 1
+    else:
+        if timeoftheday > -0.94:
+            timeoftheday -= speed
+        else:
+            timezmienna = 0
+    if timeoftheday > 0:
+        timeoftheday = 0
+    if timeoftheday < -0.94:
+        timeoftheday = -0.94
+
+    return timeoftheday, timezmienna
+
+def drawMouse(x, y, radius, color, thickness, linelongness):
+    pygame.draw.circle(obraz, color, [int(x), int(y)], int(radius), thickness)
+    pygame.draw.line(obraz, color, [x - radius * linelongness, y], [x + radius * linelongness, y])
+    pygame.draw.line(obraz, color, [x, y - radius * linelongness], [x, y + radius * linelongness])

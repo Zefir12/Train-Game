@@ -5,7 +5,10 @@ class Map:
         self.name = name
         self.number = number
         self.size = size
+        self.coloroffset = 0
         self.wymiaryMapyx = sizex
         self.wymiaryMapyy = sizey
         self.chunklist = []
         self.zombielist = []
+        self.timeoftheday = 0
+        self.timezmienna = 1

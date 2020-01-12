@@ -28,6 +28,7 @@ class Player:
         self.stones = 0
         self.wood = 0
         self.hp = 100
+        self.tool = 'Bow'
 
 
     def move(self):
