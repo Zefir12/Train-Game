@@ -10,7 +10,8 @@ clock = pygame.time.Clock()
 czcionka = pygame.font.Font("Czcionki/Montserrat-ExtraBold.otf", 10)
 czcionkaBIG = pygame.font.Font("Czcionki/Montserrat-ExtraBold.otf", 40)
 obraz = pygame.display.set_mode([Settings.szerokoscOkna, Settings.wysokoscOkna])
-water = pygame.image.load('water.png')
+water = pygame.image.load('Graphics/water.png')
+backgroundmenu = pygame.image.load('Graphics/backgroundmenu.png')
 
 
 def napisy(co, x, y,rozmiar):
@@ -32,8 +33,11 @@ def przycisk(x, y, sizex, sizey, zmiennax, zmiennay, event, zmiennatrue=True, zm
     else:
         return zmiennafalse
 
-def redraw_game(r, g, b):
-    pygame.Surface.fill(obraz, [r, g, b])
+def redraw_game(r, g, b, image=False, x=0, y=0):
+    if image is False:
+        pygame.Surface.fill(obraz, [r, g, b])
+    else:
+        obraz.blit(image, [x, y])
 
 
 def off():
@@ -79,3 +83,13 @@ def drawMouse(x, y, radius, color, thickness, linelongness):
     pygame.draw.circle(obraz, color, [int(x), int(y)], int(radius), thickness)
     pygame.draw.line(obraz, color, [x - radius * linelongness, y], [x + radius * linelongness, y])
     pygame.draw.line(obraz, color, [x, y - radius * linelongness], [x, y + radius * linelongness])
+
+def menubackgroundoffset(speed, x, y):
+    if Settings.offsetmenux > x:
+        Settings.offsetmenux -= speed
+    if Settings.offsetmenux < x:
+        Settings.offsetmenux += speed
+    if Settings.offsetmenuy > y:
+        Settings.offsetmenuy -= speed
+    if Settings.offsetmenuy < y:
+        Settings.offsetmenuy += speed
